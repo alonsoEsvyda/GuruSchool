@@ -1,0 +1,113 @@
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/material_bootstrap/mdb.min.js"></script>
+    <script type="text/javascript" src="../../js/intro/intro.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //llamamos al tooltip para sacar un titulo en cada alt
+            $(function () {
+              $('[data-toggle="tooltip"]').tooltip()
+            })
+        })
+    </script>
+    <!--sistema de notificacion-->
+    <script type="text/javascript" src="../../js/notify/pnotify.custom.min.js"></script>
+    <?php
+    if ($DataPlay[0]=="Gratis") {
+    ?>
+    <!--youtube api-->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!--script, configuracion youtbe-->
+    <script type="text/javascript">
+        var id=$(".video_code").attr('data-id');
+        var DataId=$('.video_code').attr('id');
+        var player,
+        time_update_interval = 0;
+        function onYouTubeIframeAPIReady(id) {
+            if (typeof(id) == "undefined") {
+                id=$(".video_code").attr('data-id');
+            }
+            player = new YT.Player(DataId, {
+                width: 600,
+                height: 400,
+                videoId: id,
+                playerVars: {
+                    color: 'white'
+                },
+                events: {
+                    onReady: initialize,
+                    onStateChange: onPlayerStateChange
+                }
+            });
+        }
+        function initialize(){
+            //desactiva cualquier intervalo antiguo.
+            clearInterval(time_update_interval);
+
+            //Comience intervalo para actualizar la pantalla del tiempo transcurrido y
+            //la parte transcurrido de la barra de progreso de cada segundo.
+            time_update_interval = setInterval(function () {
+                //updateTimerDisplay();
+            }, 1000)
+         
+        }
+        function formatTime(time){
+            time = Math.round(time);
+         
+            var minutes = Math.floor(time / 60),
+            seconds = time - minutes * 60;
+         
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+         
+            return minutes + ":" + seconds;
+        }
+        function onPlayerStateChange(event) {
+
+            if(event.data == YT.PlayerState.ENDED){
+                player.seekTo(0);
+                var NameTheme=$('#video-placeholder').attr('data-theme');
+                var DataCourse=$('#video-placeholder').attr('data-course');
+                var ID=$('#video-placeholder').attr('data-id');
+                $.post('controll/make_video.php',{
+                    NameVideo:NameTheme,
+                    DataCourse:DataCourse
+                },function(info){
+                    if (info==true) {
+                        $('a[data-name="'+ID+'"] .tiitle-list').html('<i style="color:rgba(46, 204, 113,1.0); !important;" class="fa fa-check-circle" aria-hidden="true"></i> '+ NameTheme);
+                    }
+                });
+                player.stopVideo();
+            }
+
+        }
+    </script>
+    <?php
+    }else if($DataPlay[0]=="De Pago"){
+      ?>
+    <!--Video player-->
+    <script type="text/javascript" src="../../js/video/video-js.js"></script>
+    <!--supor video player for IE8-->
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#my-video").on('ended', function(){
+                var NameTheme=$(this).attr('data-theme');
+                var DataCourse=$(this).attr('data-course');
+                var ID=$(this).attr('data-id');
+                  $.post('controll/make_video.php',{
+                        NameVideo:NameTheme,
+                        DataCourse:DataCourse
+                    },function(info){
+                        if (info==true) {
+                            $('a[data-name="'+ID+'"] .tiitle-list').html('<i style="color:rgba(46, 204, 113,1.0); !important;" class="fa fa-check-circle" aria-hidden="true"></i> '+ NameTheme);
+                        }
+                    });
+            });
+        });
+    </script>  
+      <?php
+    }else{
+        header("Location:../user?request=Ups, hubo un error, pronto lo resolveremos.");
+    }
+  ?>
+

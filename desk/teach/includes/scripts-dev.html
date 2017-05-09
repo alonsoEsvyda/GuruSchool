@@ -1,0 +1,92 @@
+  	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/material_bootstrap/mdb.min.js"></script>
+    <script type="text/javascript" src="../../js/notify/pnotify.custom.min.js"></script>
+    <script type="text/javascript" src="../../js/intro/intro.js"></script>
+    <!--subir vídeos-->
+    <script type="text/javascript" src="../../js/ajax/upload.js"></script>
+    <!--reemplazar el textarea-->
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea',menubar: false });</script>
+    <!--<script type="text/javascript" src="../../js/video/video-js.js"></script>-->
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		//llamamos al tooltip para sacar un titulo en cada alt
+    		$(function () {
+			  $('[data-toggle="tooltip"]').tooltip()
+			});
+    	})
+    </script>
+    <script type="text/javascript">
+        function notify(tit,not,type,style)
+        {
+            new PNotify({
+                title: tit,
+                text: not,
+                type: type,
+                styling: style
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        var playBtn = document.getElementById('play-btn');
+        var pauseBtn = document.getElementById('pause-btn');
+        var muteBtn = document.getElementById('mute-btn');
+        var unmuteBtn = document.getElementById('unmute-btn');
+        var stopBtn = document.getElementById('stop-btn');
+
+        playBtn.addEventListener('click', pausePlayHandler, false);
+        pauseBtn.addEventListener('click', pausePlayHandler, false);
+        muteBtn.addEventListener('click', muteUnmuteHandler, false);
+        unmuteBtn.addEventListener('click', muteUnmuteHandler, false);
+        stopBtn.addEventListener('click', stopHandler, false);
+
+        function pausePlayHandler(e) {
+           if (video1.paused) {
+               // Si está en pausa, reprodúzcalo
+               video1.play();
+                // Haga que se muestre el botón de pausa y se oculte el botón de reproducción
+               $(playBtn).addClass("opacity");
+               $(pauseBtn).removeClass('opacity');
+           } else {
+               // Si se está reproduciendo, páuselo
+               video1.pause();
+               // Haga que se muestre el botón de reproducción y se oculte el botón de pausa
+               $(pauseBtn).addClass("opacity");
+               $(playBtn).removeClass("opacity");
+           }
+        }
+
+        function muteUnmuteHandler(e) {
+           if (video1.volume == 0.0) {
+               // Si está silenciado, active el sonido
+               video1.volume = 1.0;
+               // Haga que se muestre el botón de silencio y se oculte el botón de activación de sonido
+               $(muteBtn).removeClass("opacity");
+               $(unmuteBtn).addClass("opacity");
+           } else {
+               // Si el sonido está activado, siléncielo
+               video1.volume = 0.0;
+               // Haga que se muestre el botón de activación de sonido y se oculte el botón de silencio
+               $(unmuteBtn).removeClass("opacity");
+               $(muteBtn).addClass("opacity");
+           }
+        }
+
+        function stopHandler(e) {
+           // No hay método de detención para el vídeo en HTML5
+           // Como solución, pause el vídeo
+           // y establezca currentTime como 0
+           video1.currentTime = 0;
+           video1.pause();
+           // Si está silenciado, active el sonido
+           video1.volume = 1.0;
+           $(playBtn).removeClass("opacity");
+           $(pauseBtn).removeClass('opacity');
+           $(unmuteBtn).removeClass("opacity");
+           $(muteBtn).removeClass("opacity");
+           // Muestre u oculte otros botones de vídeo según corresponda
+        }
+    </script>
+    
+

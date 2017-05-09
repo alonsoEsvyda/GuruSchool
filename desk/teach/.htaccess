@@ -1,0 +1,17 @@
+
+#condicional
+<IfModule mod_rewrite.c> 
+	# Activar RewriteEngine
+	RewriteEngine on
+
+	# Reescribir la URL solicitada por el usuario
+	#   Entrada:  clientes/NOMBRE/
+	#   Salida: categoria.php?id=NOMBRE
+	
+	RewriteRule ^update_course/(\w+)/?$ update_course.php?IdC=$1
+	RewriteRule ^up_video_course/(\w+)/?$ up_video_course.php?IdC=$1
+</IfModule>
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php 
+

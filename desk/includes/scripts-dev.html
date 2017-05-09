@@ -1,0 +1,31 @@
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/material_bootstrap/mdb.min.js"></script>
+    <script src="../js/main/main.js" type="text/javascript"></script>
+    <!--sisitema de notificacion-->
+    <script type="text/javascript" src="../js/notify/pnotify.custom.min.js"></script>
+    <script type="text/javascript" src="../js/intro/intro.js"></script>
+    <!--reemplaza el textarea-->
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea', menubar: false });</script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		//llamamos al tooltip para sacar un titulo en cada alt
+    		$(function () {
+			  $('[data-toggle="tooltip"]').tooltip()
+			})
+    	})
+    </script>
+    <script type="text/javascript">
+        function notify(tit,not,type,style)
+        {
+            new PNotify({
+                title: tit,
+                text: not,
+                type: type,
+                styling: style
+            });
+        }
+    </script>
+
+
