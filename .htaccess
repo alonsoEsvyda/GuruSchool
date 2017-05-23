@@ -1,33 +1,18 @@
-ErrorDocument 400 /error.html
-ErrorDocument 401 /error.html
-ErrorDocument 403 /error.html
-ErrorDocument 404 /error.html
-ErrorDocument 500 /error.html
-
-
-RewriteEngine on
+Options -Multiviews
+ 
+RewriteEngine On
+ 
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php 
+RewriteCond %{REQUEST_FILENAME} !-f
+ 
+RewriteRule ^(.+)/(.+)/(.+)$ index.php?controller=$1&method=$2&parametro=$3 [L]
+ 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 
-Options -Indexes
- RewriteEngine on
- RewriteCond %{REQUEST_URI} ^.*/developer/.*$
- RewriteRule .*$ http://localhost/GuruSchool/error.html
+RewriteRule ^(.+)/(.+)$ index.php?controller=$1&method=$2 [L]
 
-RewriteCond %{QUERY_STRING} ^(%2d|-)[^=]+$ [NC]
-RewriteRule ^(.*) $1? [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 
-<IfModule php5_module>
-    php_flag session.cookie_httponly on
-</IfModule>
-
-# Evita que se enmarque la pagina en el iframe de otro sitio
-Header set X-Frame-Options DENY
-# Protección contra Ataques XSS
-Header set X-XSS-Protection "1; mode=block"
-# No permitimos que se ejecute javascript externo y nos da una capa de refuerzo contra ataques XSS
-# Don't allow inline JavaScript to run.
-Header set X-Content-Security-Policy "allow 'self';"
-# Previene mime ataques
-Header set X-Content-Type-Options "nosniff"
+RewriteRule ^(.+)$ index.php?controller=$1 [L]
