@@ -2,8 +2,8 @@
 
 function StringEncode($ses)//Encriptar cadena de caracteres
     {     
-      $this->stringEncode=$ses;
-	  $sesencoded = $this->stringEncode;  
+      $stringEncoder=$ses;
+	  $sesencoded = $stringEncoder;  
 	  $num = mt_rand(4,4);  
 
 	  for($i=1;$i<=$num;$i++)
@@ -21,11 +21,11 @@ function StringEncode($ses)//Encriptar cadena de caracteres
 
 function StringDecode($str)//Des-Encriptar cadena de caracteres
 	{  
-	   $this->StringDecode=$str;
+	   $StringDecoder=$str;
 	   $alpha_array =  
 	   array('Y','D','U','R','P',  
 	   'S','B','M','A','T','H');  
-	   $decoded = base64_decode($this->StringDecode);  
+	   $decoded = base64_decode($StringDecoder);  
 	   list($decoded,$letter) = split("\+",$decoded);  
 
 	   for($i=0;$i<count($alpha_array);$i++)

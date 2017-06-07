@@ -6,11 +6,8 @@ $headers = '
 		<title>Aprende, Enseña en linea | Gurú School</title>
 
 		<!-- Meta Tags Headers -->
-		<meta charset="utf-8">
 		<meta content="text/html; charset=UTF-8; X-Content-Type-Options=nosniff" http-equiv="Content-Type" />
-		'.header( 'X-Frame-Options: SAMEORIGIN' ).'
-		'.header( 'X-XSS-Protection: 1;mode=block' ).'
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta name=" title" content="Aprende, Enseña en linea | Gurú School">
 		<meta name="description" content="Somos una plataforma colaborativa donde puedes aprender y enseñar cursos o tutoriales de una forma agradable y fácil"> 
 		<meta http-equiv="Content-Language" content="es">
@@ -39,8 +36,8 @@ $headers = '
 if (isset($_GET['accept'])) {
     if (isset($_SESSION['Data']['Id_Usuario'])) {
     	$section = '<li><a href="desk/user" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
-        <li><a href="Cursos?accept=yes" class="waves-effect waves-light">Cursos</a></li>
-        <li><a href="Certificados?accept=yes" class="waves-effect waves-light">Certificados</a></li>
+        <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
+        <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
         <li><a href="la-bolsa?accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi Cuenta <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -56,17 +53,17 @@ if (isset($_GET['accept'])) {
             </ul>
         </li>';
     }else{
-    	$section = '<li><a href="index" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
-        <li><a href="Cursos?accept=yes" class="waves-effect waves-light">Cursos</a></li>
-        <li><a href="Certificados?accept=yes" class="waves-effect waves-light">Certificados</a></li>
+    	$section = '<li><a href="'.BASE_DIR.'/home/" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
+        <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
+        <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
         <li><a href="la-bolsa?accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
-        <li><a href="iniciar-sesion" class="waves-effect waves-light">Iniciar Sesión</a></li>
-        <li><a style="background-color:#2BBBAD; color:white; border-radius:2px; padding:13px; margin-top:15px; font-size:15px;" href="index" class="btn-register-menu waves-effect waves-light">REGISTRATE</a></li>';
+        <li><a href="'.BASE_DIR.'/home/iniciar_session/" class="waves-effect waves-light">Iniciar Sesión</a></li>
+        <li><a style="background-color:#2BBBAD; color:white; border-radius:2px; padding:13px; margin-top:15px; font-size:15px;" href="'.BASE_DIR.'/home/" class="btn-register-menu waves-effect waves-light">REGISTRATE</a></li>';
     }
 }else{
-	$section ='<li><a href="index" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
-    <li><a href="Cursos?accept=yes" class="waves-effect waves-light">Cursos</a></li>
-    <li><a href="Certificados?accept=yes" class="waves-effect waves-light">Certificados</a></li>
+	$section ='<li><a href="'.BASE_DIR.'/home/" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
+    <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
+    <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
     <li><a href="la-bolsa?accept=yes" class="waves-effect waves-light">La Bolsa</a></li>';
 }	
 
@@ -217,6 +214,7 @@ $resource_script = '
 	<script src="'.BASE_DIR.'/design/js/notify/pnotify.custom.min.js" type="text/javascript"></script>
 	<!--efectos-->
 	<script src="'.BASE_DIR.'/design/js/wow/wow.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js"></script>
 	<script>
 		new WOW().init();
 	</script>

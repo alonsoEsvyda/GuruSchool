@@ -46,8 +46,12 @@
  * @function redirect()   función para hacer una redirección a cualquier controlador
  *
  **/
-	function redirect($controller=DEFAULT_CONTROLLER,$method=DEFAULT_METHOD){
-		header("Location:".BASE_DIR."/".$controller."/".$method);
+	function redirect($controller=DEFAULT_CONTROLLER,$method=DEFAULT_METHOD, $request, $message){
+        if (isset($request) && !empty($request) && isset($message) && !empty($message)) {
+            header("Location:".BASE_DIR."/".$controller."/".$method."/&".$request."=".$message);
+        }else{
+            header("Location:".BASE_DIR."/".$controller."/".$method."/");
+        }
 	}
 
 // --------------------------------------------------------------------

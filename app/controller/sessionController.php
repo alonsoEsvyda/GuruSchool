@@ -4,6 +4,7 @@
     	private $adapter;
         private $session;
         private $api_rest;
+        private $mail;
     	
         public function __construct() {
             parent::__construct();
@@ -18,8 +19,10 @@
             $this->helper("crypt");
             //load rest
             $this->api_rest = new Rest();
+            //load PhpMailer
+            $this->mail = new PHPMailer(true);
             //load the model Session
-            $this->session = $this->model("Session",$this->adapter);
+            $this->session = $this->model("Session",$this->adapter,'G_Usuario');
         }
         
         public function validate_session_facebook(){
@@ -90,7 +93,7 @@
                         if (TestPassword($StrPass,BASE_DIR."/home")) {
                             //validamos que halla llegado un correo valido
                             if (TestMail($StrMail)) {
-                                $validate_email = $this->session->email_validate($StrMail);
+                                $validate_email = $this->session->email_validate_false($StrMail);
                                 if ($validate_email) {
                                     $EncodePass = HashPassword($StrPass);
                                     $nivel = 1;
@@ -174,5 +177,118 @@
                 }
             }
         }
+
+        public function rescue_pass(){
+            //definimos las variables
+            $StrToken = md5(uniqid(microtime(), true));
+            $StrEmail = TestInput($_POST['Email']);
+                //seteamos las variables yverificamos que sean del tipo string
+                if (is_string($StrEmail)) {
+                    //Validmos que sea un Correo Valido
+                    if (TestMail($StrEmail)) {
+                        $validate_email = $this->session->email_validate_true($StrEmail);
+                            if ($validate_email) {
+                                $insert_token = $this->session->update_token_user_pass($StrEmail,$StrToken);
+                                if ($insert_token) {
+                                    //cuerpo del mensaje
+                                    $body='
+                                    <html>
+                                    <head>
+                                    </head>
+                                    <body>
+                                    <div>
+                                        <div style="width:100%; height:auto; padding:10px; background-color:rgba(189, 195, 199,0.4);font-family: sans-serif;">
+                                        <strong style="color:rgba(52, 73, 94,1.0);"><h2>¡Hola '.$StrEmail.'!</h2></strong>
+                                        <h3 style="font-weight:100;">Alguien solicitó cambiar tu password. Puedes hacerlo:</h3>
+                                        <a  href=http://localhost/GuruSchool/home/rescatar_password/&token_password='.$StrToken.'> DANDO CLIK EN ESTE ENLACE</a>
+                                        <h3 style="font-weight:100;">Si tú no solicitaste este cambio, por favor ignora este mail, tu contraseña no se modificará si no hasta que accedas al link de arriba.</h3>
+                                        <hr>
+                                        <p class="dis" style="font-size:12px;">La información contenida en este correo electrónico está dirigida únicamente a su destinatario, es estrictamente confidencial y por lo tanto legalmente protegida. Cualquier comentario o declaración hecha no es necesariamente de GURÚ SCHOOL. GURÚ SCHOOL no es responsable de ninguna recomendación, solicitud, oferta y convenio. El envio de este correo se realizó por medio de una aplicación de GURÚ SCHOOL, por favor no contestar este mensaje, si desea comunicarse con nosotros, hagalo por medio de <a href="mailto:baja@guruschool.co" title="Sugerencia-reclamo-pregunta">baja@guruschool.co</a></p>
+                                        </div>
+                                     </div> 
+                                    </body>
+                                    </html>
+                                    ';
+                                    $body .= "";
+
+                                    $this->mail->IsSMTP();
+                                    $this->mail->Host = "smtp.gmail.com";     
+                                    $this->mail->Port = 465;  
+                                    $this->mail->SMTPAuth = true;
+                                    $this->mail->SMTPSecure = "ssl"; 
+                                    $this->mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+
+                                    $this->mail->From     = "avmsolucion@gmail.com";
+                                    $this->mail->FromName = "GURU SCHOOL";
+                                    $this->mail->Subject  = "Cambio de Contraseña";
+                                    $this->mail->AltBody  = "Leer"; 
+                                    $this->mail->MsgHTML($body);
+                                    // Activo condificacción utf-8
+                                    $this->mail->CharSet = 'UTF-8';
+
+                                    $this->mail->AddAddress($StrEmail);
+                                    $this->mail->SMTPAuth = true;
+                                    
+                                    $this->mail->Username="avmsolucion@gmail.com";
+                                    $this->mail->Password="yousolicit1200";
+                                    //enviamos el email
+                                    if ($this->mail->Send()) {
+                                        echo true;
+                                    }else{
+                                        echo false;
+                                        die();
+                                    }
+                                }else{
+                                    echo false;
+                                }
+                            }else{
+                                echo false;
+                            }
+                    }else{
+                        echo false;
+                    }
+                }else{
+                    echo false;
+                }
+        }
+
+        public function change_rescue_pass(){
+            //definimos las variables y las sanamos
+            $EmailDecode=StringDecode($_POST['Key']);
+            $StrEmail=TestInput($EmailDecode);
+            $NewPass=TestInput($_POST['NewPass']);
+            $RepeatPass=TestInput($_POST['RepeatPass']);
+            $NewVal=NULL;
+            //validamos que la contraseña sea igual a la contraseña que se repite
+            if ($RepeatPass==$NewPass) {
+                if (strlen($NewPass) < 8) {
+                    echo false;
+                }else if(!preg_match('/(?=\d)/', $NewPass)){
+                    echo false;
+                }else if(!preg_match('/(?=[a-z])/', $NewPass)){
+                    echo false;
+                }else if(!preg_match('/(?=[A-Z])/', $NewPass)){
+                    echo false;
+                }else{
+                    //convertimos la contraseña nueva a un Hash
+                    $StrPassHash=HashPassword($NewPass);
+                    //Actualizamos la contraseña 
+                    $update_password = $this->session->update_pass_user($StrPassHash,$StrEmail);
+                    //verificamos que se ejecute correctamente la consulta
+                    if ($update_password) {
+                        $update_token = $this->session->update_token_user_pass($StrEmail,$NewVal);
+                        if ($update_token) {
+                            echo true;
+                        }else{
+                            echo false;
+                        }
+                    }else{
+                        echo false;
+                    }
+                }
+            }else{
+                echo false;
+            }
+        } 
     }
 ?>

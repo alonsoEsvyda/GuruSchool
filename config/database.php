@@ -4,7 +4,6 @@
 	    "host"      =>"localhost",
 	    "user"      =>"root",
 	    "pass"      =>"",
-	    "database"  =>"GuruSchool",
-	    "charset"   =>"utf8"
+	    "database"  =>"GuruSchool"
 	);
 ?>

@@ -1,10 +1,4 @@
 // Load the SDK asynchronously
-  function Hostname(){
-    var loc = window.location;
-    var Route = loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length));
-    return Route;
-  }
-
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;

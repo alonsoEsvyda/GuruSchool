@@ -40,4 +40,5 @@
 	define("PATH_CONTROLLER","app/controller/");
 	define("PATH_MODEL","app/model/");
 	define("PATH_VIEW","app/view/");
+	define("PATH_MEDIA","design/img/");
 ?>

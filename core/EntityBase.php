@@ -68,12 +68,25 @@ class EntityBase{
         $query=$this->db->query("DELETE FROM $this->table WHERE $column='$value'"); 
         return $query;
     }
-    
 
     /*
      * Aqui podemos montarnos un monton de métodos que nos ayuden
      * a hacer operaciones con la base de datos de la entidad
      */
     
+    public function SQLStudentsIn($IdCurso){
+        $SqlGetDataCourse=$this->db()->prepare("SELECT COUNT(DISTINCT(Int_Fk_IdUsuario)) AS numero FROM G_Usuarios_Cursos WHERE Int_Fk_IdCurso= ? ");
+        $SqlGetDataCourse->bind_param("i",$IdCurso);
+        $SqlGetDataCourse->execute();
+        $SqlGetDataCourse->store_result();
+        $SqlGetDataCourse->bind_result($NumberStudents);
+        $SqlGetDataCourse->fetch();
+        if ($NumberStudents==0) {
+            return 0;
+        }else{
+            return $NumberStudents;
+            $SqlGetDataCourse->close();
+        }
+    }
 }
 ?>

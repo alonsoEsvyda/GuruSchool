@@ -6,7 +6,7 @@
 */
 class Rest {    
     public function API(){
-        header('Content-Type: application/JSON');                
+        header('Content-Type: application/json; charset=UTF-8');                
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($method) {
         case 'GET'://consulta

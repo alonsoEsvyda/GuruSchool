@@ -198,4 +198,5 @@
 <?= $footer; ?>
 <?= $resource_script; ?>
 <div id="fb-root"></div>
+<script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/hostname.js"></script>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/session_facebook/facebook_callback.js"></script>

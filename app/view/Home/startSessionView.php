@@ -96,7 +96,7 @@
                           </center>
                             <form>
                             <div class="request margin-lestc-top margin-lestc-bottom"></div>
-                              <input type="email" placeholder="Escribe tu Correo" class="Email-Rescue" name="email" required/>
+                              <input type="email" placeholder="Escribe tu Correo" class="Email-Rescue" name="email"/>
                               <input type="submit" style="width:100%;" name="button-res" class="Btn-Rescue btn btn-default" value="Enviar Correo">
                             </form>
                         </div>
@@ -111,5 +111,6 @@
 <?= $footer; ?>
 <?= $resource_script; ?>
 <div id="fb-root"></div>
+<script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/hostname.js"></script>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/session_facebook/facebook_callback.js"></script>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/rescue_pass/rescue_callback.js"></script>

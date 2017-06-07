@@ -40,7 +40,8 @@
  */
 
 // --------------------------------------------------------------------
-
+header( 'X-Frame-Options: SAMEORIGIN' );
+header( 'X-XSS-Protection: 1;mode=block' );
 $sess_parameters = session_name();
 if (session_start()) {
 	setcookie($sess_parameters, session_id(), null, '/', null, null, true);
@@ -80,7 +81,14 @@ class BaseController{
 		 */
 		require_once 'api_rest.php';
 
-		require_once 'library/api-facebook/src/Facebook/autoload.php';
+
+		/**
+		 *---------------------------------------------------------------
+		 * PHP MAILER, FOR SEND MAILS
+		 *---------------------------------------------------------------
+		 *
+		 */
+		require_once "library/phpmailer/class.phpmailer.php";
 		
 		/**
 		 *---------------------------------------------------------------
@@ -114,6 +122,7 @@ class BaseController{
 	 * @param string $data    data en forma de array o variable estandar
 	 *
 	 **/
+
 	public function render($folder,$view,$data){
 		//validamos que vengan datos en la variable para las vistas
 		if (!empty($data)) {
@@ -144,8 +153,8 @@ class BaseController{
 	 * @function model()   carga un modelo y su conexión
 	 *
 	 **/
-	public function model($model,$adapter){
-		return new $model($adapter);
+	public function model($model,$adapter,$table){
+		return new $model($adapter,$table);
 	}
 
 	// --------------------------------------------------------------------
@@ -162,7 +171,5 @@ class BaseController{
 		$route = "helpers/".$helper."Helper.php";
 		require_once $route;
 	}
-
-	// --------------------------------------------------------------------
 }
 ?>

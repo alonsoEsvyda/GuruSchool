@@ -48,17 +48,21 @@ class Connect{
         $this->user=$db_cfg["user"];
         $this->pass=$db_cfg["pass"];
         $this->database=$db_cfg["database"];
-        $this->charset=$db_cfg["charset"];
     }
     
     public function con(){
         
         if($this->driver=="mysql" || $this->driver==null){
             $con=new mysqli($this->host, $this->user, $this->pass, $this->database);
-            $con->query("SET NAMES '".$this->charset."'");
+            $con->query("SET NAMES 'utf8'");
+
+            if ($con->connect_errno) {
+                printf("Conexión fallida: %s\n", $con->connect_error);
+                exit();
+            }else{
+                return $con;
+            }
         }
-        
-        return $con;
     }
     
 }
