@@ -8,7 +8,6 @@ $headers = '
 		<!-- Meta Tags Headers -->
 		<meta content="text/html; charset=UTF-8; X-Content-Type-Options=nosniff" http-equiv="Content-Type" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name=" title" content="Aprende, Enseña en linea | Gurú School">
 		<meta name="description" content="Somos una plataforma colaborativa donde puedes aprender y enseñar cursos o tutoriales de una forma agradable y fácil"> 
 		<meta http-equiv="Content-Language" content="es">
 		<meta name="distribution" content="global"/>

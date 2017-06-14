@@ -16,7 +16,7 @@
             type: "POST",
             url: Hostname()+"/GuruSchool/session/validate_session_facebook",
             data:data
-        }).done (function(info){
+        }).done(function(info){
             if (info == true) {
               //por modificarse
               window.location = Hostname()+"/GuruSchool/home/iniciar_session/";
@@ -26,6 +26,8 @@
               window.location = Hostname()+"/GuruSchool/home/iniciar_session&request=Inicie con su password";
             }else if (info == "NoInsert"){
               window.location = Hostname()+"/GuruSchool/home/index&request=Error al registrar, intente de nuevo";
+            }else{
+              console.log("OLA MUNDO")
             }
         });
       });
@@ -39,7 +41,8 @@
       statusChangeCallback(response);
     });
   }
-window.fbAsyncInit = function() {
+
+  window.fbAsyncInit = function() {
     FB.init({
       appId      : '981554355256359',
       cookie     : true,  // enable cookies to allow the server to access 

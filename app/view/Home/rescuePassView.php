@@ -16,6 +16,7 @@
                     <div class="col-md-4">
                         <form id="FrmPass">
                             <div class="request margin-lest-top margin-lestc-bottom"></div>
+                            <input type="hidden" name="token_received" class="key_received" value="<?= $token_received; ?>" required/>
                             <input type="hidden" name="Key" class="key" value="<?= $helper->StringEncode($StrEmail); ?>" required/>
                             <input type="password" data-toggle="tooltip" data-placement="top" title="El password debe ser Mayor a 8 digitos, tener 1 letra Mayúscula minimo, 1 dígito y 1 letra Minúscula minimo." autofocus="autofocus" class="new-pass" placeholder="Escibre tu nueva Contraseña" name="NewPass" required/>
                             <input type="password" placeholder="Repite tu Contraseña" class="repeat-pass" name="RepeatPass" required/>

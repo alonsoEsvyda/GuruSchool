@@ -71,7 +71,7 @@
 						                    <div class="card-image hidden-xs">
 						                        <div class="view overlay hm-white-slight z-depth-1">
 						                            <img src="<?= BASE_DIR; ?>/design/img/Cursos_Usuarios/{{courses.Imagen}}" class="img-responsive" alt="">
-						                            <a href="desk/details/{{courses.IdPkCurso}}/{{courses.StrNameCurso.replace(' ','-')}}">
+						                            <a href="<?= BASE_DIR; ?>/cursos/detalles/{{courses.IdPkCurso}}/&accept=yes">
 						                                <div class="mask waves-effect"></div>
 						                            </a>
 						                        </div>
@@ -79,7 +79,7 @@
 						                    <div class="card-image-res visible-xs">
 						                        <div class="view overlay hm-white-slight z-depth-1">
 						                            <img src="<?= BASE_DIR; ?>/design/img/Cursos_Usuarios/{{courses.Imagen}}" class="img-responsive" alt="">
-						                            <a href="desk/details/{{courses.IdPkCurso}}/">
+						                            <a href="<?= BASE_DIR; ?>/cursos/detalles/{{courses.IdPkCurso}}/&accept=yes">
 						                                <div class="mask waves-effect"></div>
 						                            </a>
 						                        </div>

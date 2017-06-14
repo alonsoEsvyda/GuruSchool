@@ -30,6 +30,36 @@
             $SqlGetView->close();
             return $ArrayData;
         }
+
+        public function GetViewCourseSubCategorie($SubCategoria){
+            $SqlGetView=$this->db()->prepare("SELECT Id_Pk_Curso,Int_Fk_IdUsuario,Vc_NombreCurso,Vc_Imagen_Promocional,Int_PrecioCurso,Vc_TipoCurso,Vc_NombreUsuario,Vc_EstadoCurso FROM vw_seleccioncursos WHERE Vc_SubCategoria = ? ORDER BY RAND() DESC LIMIT  4 ");
+            $SqlGetView->bind_param("s", $SubCategoria);
+            $SqlGetView->execute();
+            $SqlGetView->store_result();
+            $SqlGetView->bind_result($IdPkCurso,$IdFkUser,$StrNameCurso,$Imagen,$Intprecio,$StrTipoCurso,$NameUser,$StateCourse);
+            while ($SqlGetView->fetch()) {
+                $ArrayData[]=array($IdPkCurso,$IdFkUser,$StrNameCurso,$Imagen,$Intprecio,$StrTipoCurso,$NameUser,$StateCourse);
+            }
+            $SqlGetView->close();
+            return $ArrayData;
+        }
+
+        public function GetDataVideos($IdPkCurso){
+            $SqlGetNameVideos=$this->db()->prepare("SELECT Txt_NombreVideo,Id_Pk_VideosCurso,Vc_VideoArchivo FROM G_Videos_Curso WHERE Int_Fk_IdCurso = ?");
+            $SqlGetNameVideos->bind_param("s",$IdPkCurso);
+            $SqlGetNameVideos->execute();
+            $SqlGetNameVideos->store_result();
+            if ($SqlGetNameVideos->num_rows==0) {
+                return false;
+            }else{
+                $SqlGetNameVideos->bind_result($NameVideo,$IntIdVideo,$Srcvideo);
+                while($SqlGetNameVideos->fetch()){
+                    $ArrayNameVideo[]=array($NameVideo,$IntIdVideo,$Srcvideo);
+                }
+                $SqlGetNameVideos->close();
+                return $ArrayNameVideo;
+            }
+        }
         
 
         public function GetCategoriesAccordeon(){
@@ -64,6 +94,72 @@
                 }
             }
             return $ArrayData;
+        }
+
+        public function GetDataCourse($IdCurso){
+            $State="Publicado";
+            $SqlGetDataCourse=$this->db()->prepare("SELECT Id_Pk_Curso,Int_Fk_IdUsuario,Vc_NombreCurso,Vc_ResumenCurso,Txt_DescripcionCompleta,Vc_Imagen_Promocional,Vc_VideoPromocional,Int_PrecioCurso,Vc_TipoCurso,Vc_SubCategoria,Vc_Categoria FROM G_Cursos WHERE Id_Pk_Curso = ? AND Vc_EstadoCurso= ?  ");
+            $SqlGetDataCourse->bind_param("is",$IdCurso,$State);
+            $SqlGetDataCourse->execute();
+            $SqlGetDataCourse->store_result();
+            if ($SqlGetDataCourse->num_rows==0) {
+                return false;
+            }else{
+                $SqlGetDataCourse->bind_result($IdPkCurso,$IdFkUser,$StrNameCurso,$StrResumen,$StrResComplete,$ImagenCurso,$VideoCurso,$Intprecio,$StrTipoCurso,$StrSubCategoria,$StrCategoria);
+                $SqlGetDataCourse->fetch();
+                return array($IdPkCurso,$IdFkUser,$StrNameCurso,$StrResumen,$StrResComplete,$ImagenCurso,$VideoCurso,$Intprecio,$StrTipoCurso,$StrSubCategoria,$StrCategoria);
+                $SqlGetDataCourse->close();
+            }
+        }
+
+        public function ValidUserCourse($IdCourse,$IdUser){
+            $ValidCouserUser=$this->db()->prepare("SELECT Int_Fk_IdCurso,Int_Fk_IdUsuario FROM G_Usuarios_Cursos WHERE Int_Fk_IdCurso= ? AND Int_Fk_IdUsuario = ? ");
+            $ValidCouserUser->bind_param("ii", $IdCourse,$IdUser);
+            $ValidCouserUser->execute();
+            $ValidCouserUser->store_result();
+            if ($ValidCouserUser->num_rows > 0) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function GetTypeCourse($IdCourse){
+            $GetTypeCourse=$this->db()->prepare("SELECT Vc_TipoCurso,Int_PrecioCurso,Vc_NombreCurso,Int_Fk_IdUsuario FROM G_Cursos WHERE Id_Pk_Curso = ? ");
+            $GetTypeCourse->bind_param("i", $IdCourse);
+            $GetTypeCourse->execute();
+            $GetTypeCourse->store_result();
+            $GetTypeCourse->bind_result($StrTypeCourse,$IntPrecio,$NameCourse,$IdUserSeller);
+            $GetTypeCourse->fetch();
+
+            return array($StrTypeCourse,$IntPrecio,$NameCourse,$IdUserSeller);
+        }
+
+        public function InsertCourseUser($IdCourse,$IdUser,$StrNameVideo,$StateVideo){
+            $InsertCourse=$this->db()->prepare("INSERT INTO G_Usuarios_Cursos (Int_Fk_IdCurso,Int_Fk_IdUsuario,Vc_NombreVideo,Vc_EstadoVideo) 
+                                                                                        VALUES (?,?,?,?)");
+            $InsertCourse->bind_param("ssss", $IdCourse,$IdUser,$StrNameVideo,$StateVideo);
+            $InsertCourse->execute();
+        }
+
+        public function SelectNameVideo($IdCourse,$StateVideo,$IdUser){
+            $GetDataCourse=$this->db()->prepare("SELECT Txt_NombreVideo FROM G_Videos_Curso WHERE Int_Fk_IdCurso= ? ");
+            $GetDataCourse->bind_param("i", $IdCourse);
+            $GetDataCourse->execute();
+            $GetDataCourse->store_result();
+            $GetDataCourse->bind_result($StrNameVideo);
+            while ($GetDataCourse->fetch()) {
+                $this->InsertCourseUser($IdCourse,$IdUser,$StrNameVideo,$StateVideo);
+            }
+        }
+
+        public function InsertPurchase($referencecode,$description,$amount,$Name,$MailUser,$IdUserSeller,$IdCourse,$IdUser){
+            $InsertPurchase=$this->db()->prepare("INSERT INTO Historial_Pagos (Vc_Reference_Sale,Txt_NameCourse,Int_MontoCurso,Vc_Nickname_Buyer,Vc_Email_Buyer,    Int_Id_UsuarioVende,Int_Id_CursoComprado,Int_Id_UsuarioCompro) VALUES ('".$referencecode."','".$description."','".$amount."','".$Name."','".$MailUser."','".$IdUserSeller."','".$IdCourse."','".$IdUser."')");
+            if ($InsertPurchase->execute()) {
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 ?>

@@ -15,7 +15,7 @@ function RescuePass(){
 }
 $(document).ready(function(){
   $('.Btn-Rescue').on('click', function(e){
-    if ($('.new-pass').val()=="" || $('.repeat-pass').val()=="" || $('.key').val()=="") {
+    if ($('.new-pass').val()=="" || $('.repeat-pass').val()=="" || $('.key').val()=="" || $('.key_received').val()=="") {
       $('.request').html("<span style='color:rgba(192, 57, 43,1.0);'>Llene los Campos correspondientes.</span>");
       $('.new-pass').css("border-bottom","2px solid red");
       $('.repeat-pass').css("border-bottom","2px solid red");

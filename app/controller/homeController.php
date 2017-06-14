@@ -41,7 +41,7 @@
                 if ($validate_token == false) {
                     redirect("home","iniciar_session","request","Token Invalido");
                 }else{
-                    $this->render("Home","rescuePassView.php",array("email"=>$validate_token));
+                    $this->render("Home","rescuePassView.php",array("email"=>$validate_token,"token_received"=>$Token));
                 }
             }
         }

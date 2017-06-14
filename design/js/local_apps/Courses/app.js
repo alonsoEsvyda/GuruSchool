@@ -8,7 +8,7 @@ app.controller("ListCourses", function($scope,$http){
 	ctrl.quantity = 0;
 	ctrl.subcategorie = "Cursos";
 
-	$http.get(Hostname()+"/GuruSchool/cursos/ApilistCourses/")
+	$http.post(Hostname()+"/GuruSchool/cursos/ApilistCourses/")
 			.success(function(data){
 				ctrl.courses_get = data;
 				ctrl.pagination = true;
@@ -23,6 +23,7 @@ app.controller("ListCourses", function($scope,$http){
 			.success(function(data){
 				ctrl.subcategorie = filter_data;
 				ctrl.courses_get = data;
+				ctrl.quantity = 0;
 			}).error(function(error){
 				console.log(error);
 			});
