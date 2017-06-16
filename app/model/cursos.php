@@ -161,5 +161,17 @@
                 return false;
             }
         }
+
+        public function GetCategoriesHtml(){
+            $SqlGetCategorie=$this->db()->prepare("SELECT Vc_NombreCat FROM G_Categorias");
+            $SqlGetCategorie->execute();
+            $SqlGetCategorie->store_result();
+            $SqlGetCategorie->bind_result($NameCat);
+            while ($SqlGetCategorie->fetch()) {
+                $ArrayCat[]=array($NameCat);
+            }
+            $SqlGetCategorie->close();
+            return $ArrayCat;
+        }
     }
 ?>

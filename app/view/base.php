@@ -37,7 +37,7 @@ if (isset($_GET['accept'])) {
     	$section = '<li><a href="desk/user" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
         <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
         <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
-        <li><a href="la-bolsa?accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
+        <li><a href="'.BASE_DIR.'/la_bolsa/trabajos/&accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi Cuenta <i class="fa fa-angle-down" aria-hidden="true"></i></a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -55,7 +55,7 @@ if (isset($_GET['accept'])) {
     	$section = '<li><a href="'.BASE_DIR.'/home/" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
         <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
         <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
-        <li><a href="la-bolsa?accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
+        <li><a href="'.BASE_DIR.'/la_bolsa/trabajos/&accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
         <li><a href="'.BASE_DIR.'/home/iniciar_session/" class="waves-effect waves-light">Iniciar Sesión</a></li>
         <li><a style="background-color:#2BBBAD; color:white; border-radius:2px; padding:13px; margin-top:15px; font-size:15px;" href="'.BASE_DIR.'/home/" class="btn-register-menu waves-effect waves-light">REGISTRATE</a></li>';
     }
@@ -63,7 +63,7 @@ if (isset($_GET['accept'])) {
 	$section ='<li><a href="'.BASE_DIR.'/home/" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
     <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
     <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
-    <li><a href="la-bolsa?accept=yes" class="waves-effect waves-light">La Bolsa</a></li>';
+    <li><a href="'.BASE_DIR.'/la_bolsa/trabajos/&accept=yes" class="waves-effect waves-light">La Bolsa</a></li>';
 }	
 
 $menuFront = '
