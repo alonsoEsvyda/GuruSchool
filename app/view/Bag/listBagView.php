@@ -12,7 +12,7 @@
                     <center>
                       <h1><i class="fa fa-suitcase" aria-hidden="true"></i> LA BOLSA</h1><br>
                       <p>Encuentra Vacantes, ofrece Empleo, crea un mundo de oportunidades.</p>
-                      <a href="desk/bag/vacancy-published"><button type="button" class="waves-effect waves-light wow pulse animated btn btn-default">Ofrecer Vacante</button></a>
+                      <a href="<?= BASE_DIR; ?>/la_bolsa/publicar_vacante/"><button type="button" class="waves-effect waves-light wow pulse animated btn btn-default">Ofrecer Vacante</button></a>
                     </center>
                 </div>
           </div>            
@@ -93,7 +93,7 @@
                       <div class="container-job">
                         <div class="company-job">
                           <h4><?php echo $vacancy[1]; ?></h4>
-                          <a href="desk/bag/job/<?php echo $vacancy[0]; ?>/"><h2><?php echo $vacancy[2]; ?></h2></a>
+                          <a href="<?= BASE_DIR; ?>/la_bolsa/trabajo/<?php echo $vacancy[0]; ?>/"><h2><?php echo $vacancy[2]; ?></h2></a>
                         </div>
                         <div class="description-job">
                           <hr style="margin:0;">

@@ -46,5 +46,41 @@
             $SqlGetData->fetch();
             return array($Name,$Dni,$Age,$Country,$City,$MailUser);
         }
+
+        public function ValidateIssetDatUser($IdUser){//validamos que el usuario tenga llenos sus datos principales
+            $SqlGetData=$this->db()->prepare("SELECT Vc_NombreUsuario,Int_Cedula,Int_Edad,Vc_Pais,Vc_Ciudad FROM G_Datos_Usuario WHERE Int_Fk_IdUsuario = ?");
+            $SqlGetData->bind_param("i", $IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            if ($SqlGetData->num_rows==0){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        public function ValidateDataProfessional($IdUser){//validamos que el usuario tenga llenos sus datos PROFESIONALES
+            $SqlGetData=$this->db()->prepare("SELECT Vc_Profesion,Txt_Biografia FROM G_Profesion_Usuario WHERE Int_Fk_DatosUsuario = ?");
+            $SqlGetData->bind_param("i", $IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            if ($SqlGetData->num_rows==0){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        public function ValidateDataAccount($IdUser){//validamos que el usuario halla llenado los datos bancarios
+            $SqlGetData=$this->db()->prepare("SELECT Vc_Cuenta FROM G_Cuenta_Usuario WHERE Int_Fk_DatosUsuario = ?");
+            $SqlGetData->bind_param("i", $IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            if ($SqlGetData->num_rows==0){
+                return false;
+            }else{
+                return true;
+            }
+        }
     }
 ?>
