@@ -62,7 +62,7 @@
             //llamamos al metodo que nos retorna los datos de la vacante
             $GetDataVacancy = $this->bags->GetDataVacancy($IdJob,"Public");
             if ($GetDataVacancy == false) {
-                redirect("la_bolsa","trabajos","request","Lo siento, no encontramos tu busqueda");
+                redirect("la_bolsa","trabajos","request","Lo siento, no encontramos tu busqueda","");
             }else{
                 foreach ($GetDataVacancy as $Data) {
                 }
@@ -90,11 +90,11 @@
 
             if ($ValidateSession && $TimeSession) {
                 if ($DatapProfesional == false) {
-                    redirect("ususario","datos","request","Debes de llenar tus Datos Profesionales.");
+                    redirect("ususario","datos","request","Debes de llenar tus Datos Profesionales.","");
                 }else if($DataAccount == false){
-                    redirect("ususario","datos","request","Debes de llenar tus Datos Bancarios.");
+                    redirect("ususario","datos","request","Debes de llenar tus Datos Bancarios.","");
                 }else if($DataUser == false){
-                    redirect("ususario","datos","request","Llena Primero tu Datos Personales.");
+                    redirect("ususario","datos","request","Llena Primero tu Datos Personales.","");
                 }
             }
 
@@ -149,26 +149,26 @@
 
             //validamos que no vengan vacíos
             if (empty($Company) || empty($Vacancy) || empty($Country) || empty($City) || empty($Categorie) || empty($TypeJob) || empty($Salary) || empty($NumVacancy) || empty($Email) || empty($Description)) {
-                redirect("la_bolsa","publicar_vacante","request","Llena los datos, no jueges :@");
+                redirect("la_bolsa","publicar_vacante","request","Llena los datos, no jueges :@","");
             }else{
                 //verificamos que no superen los caracteres
                 if (strlen($Company)>40 || strlen($Vacancy)>50 || strlen($Country)>70 || strlen($City)>30 || strlen($Categorie)>25 || strlen($TypeJob)>20 || strlen($Email)>45 ) {
-                    redirect("la_bolsa","publicar_vacante","request","No superes los datos, te tengo en la mira 0.0");
+                    redirect("la_bolsa","publicar_vacante","request","No superes los datos, te tengo en la mira 0.0","");
                 }else{
                     if ($Salary < 0 || $NumVacancy < 0) {
-                        redirect("la_bolsa","publicar_vacante","request","No inserte valores negativos");
+                        redirect("la_bolsa","publicar_vacante","request","No inserte valores negativos","");
                     }else{
                         //validamos el email
                         if (TestMail($Email)) {
                             //insertamos en la BD
                             $SqlInsert = $this->bags->InsertVacancy($IdUser,$Company,$Vacancy,$Country,$City,$Categorie,$TypeJob,$Salary,$NumVacancy,$Email,$Description,$State,$Fecha);
                             if ($SqlInsert) {
-                                redirect("la_bolsa","mis_vacantes","request","Vacante Enviada, si cumple con los requisitos será Publicada, de lo contario será Eliminada.");
+                                redirect("la_bolsa","mis_vacantes","request","Vacante Enviada, si cumple con los requisitos será Publicada, de lo contario será Eliminada.","");
                             }else{
-                                redirect("la_bolsa","publicar_vacante","request","Lo siento, hubo un error intente más tarde.");
+                                redirect("la_bolsa","publicar_vacante","request","Lo siento, hubo un error intente más tarde.","");
                             }
                         }else{
-                            redirect("la_bolsa","publicar_vacante","request","Debes escribir un Correo Valido");
+                            redirect("la_bolsa","publicar_vacante","request","Debes escribir un Correo Valido","");
                         }
                     }
                 }

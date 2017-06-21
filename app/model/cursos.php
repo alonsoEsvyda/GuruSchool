@@ -173,5 +173,64 @@
             $SqlGetCategorie->close();
             return $ArrayCat;
         }
+
+        public function SQLProgressCourse($IdUser,$IdCourse,$StateVideo){
+            $SqlGetProgress=$this->db()->prepare("SELECT ROUND((SELECT COUNT(a.Vc_EstadoVideo) as videos FROM G_Usuarios_Cursos AS a WHERE a.Vc_EstadoVideo=? AND a.Int_Fk_IdCurso=$IdCourse AND a.Int_Fk_IdUsuario=$IdUser)*100/(SELECT COUNT(b.Int_Fk_IdCurso) AS Id FROM G_Usuarios_Cursos AS b WHERE b.Int_Fk_IdCurso=? AND b.Int_Fk_IdUsuario=$IdUser)) AS Porcentaje FROM G_Usuarios_Cursos WHERE Int_Fk_IdUsuario=? ");
+            $SqlGetProgress->bind_param("sii",$StateVideo,$IdCourse,$IdUser);
+            $SqlGetProgress->execute();
+            $SqlGetProgress->store_result();
+            $SqlGetProgress->bind_result($Porcentaje);
+            $SqlGetProgress->fetch();
+            if ($Porcentaje==0) {
+                return 0;
+            }else{
+                return $Porcentaje;
+            }
+            $SqlGetProgress->close();
+        }
+
+        public function SQLGetCoursesUser($IdUser){//esta función nos retorna los datos de los cursos que estamos aprendiendo
+            $SqlGetId=$this->db()->prepare("SELECT DISTINCT(Int_Fk_IdCurso) FROM G_Usuarios_Cursos WHERE Int_Fk_IdUsuario = ? ");
+            $SqlGetId->bind_param("i", $IdUser);
+            $SqlGetId->execute();
+            $SqlGetId->store_result();
+            if ($SqlGetId->num_rows==0) {
+                $ArrayData=false;
+            }else{
+                $SqlGetId->bind_result($IntIdCurso);
+                while ($SqlGetId->fetch()) {
+                    $ProgressCourse = $this->SQLProgressCourse($IdUser,$IntIdCurso,"Completo");
+                    $SqlCourses=$this->db()->prepare("SELECT a.Id_Pk_Curso,a.Vc_NombreCurso,a.Vc_Imagen_Promocional,a.Int_PrecioCurso,a.Vc_TipoCurso,b.Vc_NombreUsuario  FROM G_Cursos AS a INNER JOIN G_Datos_Usuario AS b ON a.Int_Fk_IdUsuario=b.Int_Fk_IdUsuario WHERE a.Id_Pk_Curso = ? ");
+                    $SqlCourses->bind_param("i",$IntIdCurso);
+                    $SqlCourses->execute();
+                    $SqlCourses->store_result();
+                    $SqlCourses->bind_result($IntIdCourse,$StrNameCourse,$StrImageCourse,$IntPrecioCourse,$StrTipoCourse,$StrNameUser);
+                    while ($SqlCourses->fetch()) {
+                        $ArrayData[] = array($IntIdCourse,$StrNameCourse,$StrImageCourse,$IntPrecioCourse,$StrTipoCourse,$StrNameUser,$ProgressCourse); 
+                    }
+                }
+                $SqlCourses->close();
+            }
+            $SqlGetId->close();
+            return $ArrayData;
+        }
+
+        public function GetMyTeachCourses($IdUser){//Aquí traemos los cursos que enseña el usuario en sesión
+            $SqlGetDataTeach=$this->db()->prepare("SELECT Id_Pk_Curso,Vc_NombreCurso,Vc_Imagen_Promocional,Vc_EstadoCurso,Vc_TipoCurso,Int_PrecioCurso FROM G_Cursos WHERE Int_Fk_IdUsuario = ?");
+            $SqlGetDataTeach->bind_param("i", $IdUser);
+            $SqlGetDataTeach->execute();
+            $SqlGetDataTeach->store_result();
+            if ($SqlGetDataTeach->num_rows==0) {
+                $ArrayData=false;
+            }else{
+                $SqlGetDataTeach->bind_result($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice);
+                while ($SqlGetDataTeach->fetch()) {
+                    $StudentsIn = $this->SQLStudentsIn($IntIdCourse);
+                    $ArrayData[]= array($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice,$StudentsIn);
+                }
+            }
+            $SqlGetDataTeach->close();
+            return $ArrayData;
+        }
     }
 ?>

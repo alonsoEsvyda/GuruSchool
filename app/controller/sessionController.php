@@ -164,7 +164,7 @@
                                                 $_SESSION['Data']=array('Id_Usuario' => $session[0], 'Ipuser' => $Ip, 'navUser' => $_SERVER["HTTP_USER_AGENT"], 'hostUser' => gethostbyaddr($Ip), 'Tiempo'=>date("Y-n-j H:i:s"));
 
                                                 //por modificarse
-                                                header("Location:".BASE_DIR."/home/iniciar_session/&requestok=Felicidades, iniciaste sesion");
+                                                header("Location:".BASE_DIR."/desk/dashboard/");
                                             }else if ($session[3]==0) {
                                                 header("Location:".BASE_DIR."/home/&request=Error");  
                                             }

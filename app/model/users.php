@@ -82,5 +82,37 @@
                 return true;
             }
         }
+
+        public function DataUserPersonal($IdUser){//Traemos datos principales del usuario
+            $SqlGetData=$this->db()->prepare("SELECT Vc_NombreUsuario,Int_Cedula,Int_Edad,Vc_Pais,Vc_Ciudad,Txt_ImagenUsuario,Txt_ImagenMin,Vc_Telefono FROM G_Datos_Usuario WHERE Int_Fk_IdUsuario = ?");
+            $SqlGetData->bind_param("i", $IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            if ($SqlGetData->num_rows==0) {
+                 $ArrayData=0;
+            }else{
+                $SqlGetData->bind_result($StrName,$IntDni,$IntAge,$StrCountry,$StrCity,$StrImage,$StrImagenMin,$IntTelf);
+                $SqlGetData->fetch();
+                $ArrayData[]=array($StrName,$IntDni,$IntAge,$StrCountry,$StrCity,$StrImage,$StrImagenMin,$IntTelf);
+            }
+            $SqlGetData->close();
+            return $ArrayData;
+        }
+
+        public function DataUserProfesional($IdUser){//Traemos datos profesionales del usuario
+            $SqlGetData=$this->db()->prepare("SELECT Vc_Profesion,Txt_Biografia FROM G_Profesion_Usuario WHERE Int_Fk_DatosUsuario = ?");
+            $SqlGetData->bind_param("i", $IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            if ($SqlGetData->num_rows==0) {
+                $ArrayData=0;
+            }else{
+                $SqlGetData->bind_result($StrProfession,$StrBiografy);
+                $SqlGetData->fetch();
+                $ArrayData[]=array($StrProfession,$StrBiografy);
+            }
+            $SqlGetData->close();
+            return $ArrayData;
+        }
     }
 ?>

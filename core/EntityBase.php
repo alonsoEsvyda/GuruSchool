@@ -88,5 +88,6 @@ class EntityBase{
             $SqlGetDataCourse->close();
         }
     }
+
 }
 ?>

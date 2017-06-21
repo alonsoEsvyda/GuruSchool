@@ -46,11 +46,15 @@
  * @function redirect()   función para hacer una redirección a cualquier controlador
  *
  **/
-	function redirect($controller=DEFAULT_CONTROLLER,$method=DEFAULT_METHOD, $request, $message){
+	function redirect($controller=DEFAULT_CONTROLLER,$method=DEFAULT_METHOD, $request, $message,$UriMenu){
         if (isset($request) && !empty($request) && isset($message) && !empty($message)) {
             header("Location:".BASE_DIR."/".$controller."/".$method."/&".$request."=".$message."&accept=yes");
         }else{
-            header("Location:".BASE_DIR."/".$controller."/".$method."/&accept=yes");
+            if ($UriMenu == 1) {
+                header("Location:".BASE_DIR."/".$controller."/".$method."/&accept=yes");
+            }else if ($UriMenu == 2){
+                header("Location:".BASE_DIR."/".$controller."/".$method."/");
+            }
         }
 	}
 

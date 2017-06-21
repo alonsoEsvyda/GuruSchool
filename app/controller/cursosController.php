@@ -55,12 +55,12 @@
 
         public function detalles(){
             if (!isset($_GET['parametro']) || $_GET['parametro']=="") {
-                redirect("cursos","lista","request","Ocurrió un error");
+                redirect("cursos","lista","request","Ocurrió un error","");
             }else{
                 $IdCurso = TestInput($_GET['parametro']);
                 $GetDataCourse = $this->courses->GetDataCourse($IdCurso);
                 if ($GetDataCourse == false) {
-                    redirect("cursos","lista","request","Este curso no existe");
+                    redirect("cursos","lista","request","Este curso no existe","");
                 }
                 //Detalles Curso
                 list($IdPkCurso,$IdFkUser,$StrNameCurso,$StrResumen,$StrResComplete,$ImagenCurso,$VideoCurso,$Intprecio,$StrTipoCurso,$StrSubCategoria,$StrCategoria)=$GetDataCourse;

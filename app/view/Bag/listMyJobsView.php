@@ -67,15 +67,4 @@
 <?= $footer; ?>
 <?= $resource_script; ?>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/hostname.js"></script>
-<script type="text/javascript">
-  function Delete(button){
-    var Data=$(button).attr('data-vacancy');
-      $.post(Hostname()+'/GuruSchool/la_bolsa/ApiDeleteJob/',{
-          Data:Data,
-      },function(info){
-        if (info == true) {
-          $(button).parent('div').parent('div').remove();
-        }
-      });
-  }
-</script>
+<script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Bag/jquery/delete_job.js"></script>

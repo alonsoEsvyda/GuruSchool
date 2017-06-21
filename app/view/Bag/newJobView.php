@@ -94,3 +94,16 @@
 <?= $footer; ?>
 <?= $resource_script; ?>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/hostname.js"></script>
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=s2wi0xpte6v7aabzfpepgp6f37mq2btp9p1m7ybe7tzaxoy1"></script>
+<script>
+ 	tinymce.init({
+		selector: 'textarea',
+		height: 150,
+		menubar: false,
+		toolbar: 'insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify',
+		content_css: [
+			'//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+			'//www.tinymce.com/css/codepen.min.css'
+		]
+	});
+</script>

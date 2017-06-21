@@ -19,7 +19,7 @@
         }).done(function(info){
             if (info == true) {
               //por modificarse
-              window.location = Hostname()+"/GuruSchool/home/iniciar_session/";
+              window.location = Hostname()+"/GuruSchool/desk/dashboard/";
             }else if(info == false){
               window.location = Hostname()+"/GuruSchool/home/iniciar_session&request=Hubo un error, vuelva a internarlo";
             }else if (info == "HavePass"){

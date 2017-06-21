@@ -21,10 +21,16 @@
         }
         
         public function index(){
+            if (isset($_SESSION['Data']['Id_Usuario'])) {
+                redirect("desk","dashboard","","",2);
+            }
             $this->render("Home","homeView.php",$data="");
         }
 
         public function iniciar_session(){
+            if (isset($_SESSION['Data']['Id_Usuario'])) {
+                redirect("desk","dashboard","","",2);
+            }
             $this->render("Home","startSessionView.php",$data="");
         }
 
@@ -34,12 +40,12 @@
 
         public function rescatar_password(){
             if (!isset($_GET['token_password'])) {
-                redirect("home","iniciar_session","request","No Existe el Token de Seguridad");
+                redirect("home","iniciar_session","request","No Existe el Token de Seguridad","");
             }else{
                 $Token=TestInput($_GET['token_password']);
                 $validate_token = $this->session->token_validate_pass($Token);
                 if ($validate_token == false) {
-                    redirect("home","iniciar_session","request","Token Invalido");
+                    redirect("home","iniciar_session","request","Token Invalido","");
                 }else{
                     $this->render("Home","rescuePassView.php",array("email"=>$validate_token,"token_received"=>$Token));
                 }

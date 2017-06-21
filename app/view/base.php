@@ -26,7 +26,7 @@ $headers = '
 		<link href="'.BASE_DIR.'/design/css/notify/pnotify.custom.min.css" media="all" rel="stylesheet" type="text/css" />
 		<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 		<!-- Add IntroJs styles -->
-	    <link href="'.BASE_DIR.'/design/intro/introjs.css" rel="stylesheet">
+	    <link href="'.BASE_DIR.'/design/css/intro/introjs.css" rel="stylesheet">
 	</head>';
 
 
@@ -34,7 +34,7 @@ $headers = '
 // Process for render the menú 
 if (isset($_GET['accept'])) {
     if (isset($_SESSION['Data']['Id_Usuario'])) {
-    	$section = '<li><a href="desk/user" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
+    	$section = '<li><a href="'.BASE_DIR.'/desk/dashboard/" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
         <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
         <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
         <li><a href="'.BASE_DIR.'/la_bolsa/trabajos/&accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
@@ -61,7 +61,7 @@ if (isset($_GET['accept'])) {
     }
 }else{
   if (isset($_SESSION['Data']['Id_Usuario'])) {
-      $section = '<li><a href="desk/user" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
+      $section = '<li><a href="'.BASE_DIR.'/desk/dashboard/" class="waves-effect waves-light"><strong>Inicio</strong></a></li>
         <li><a href="'.BASE_DIR.'/cursos/lista/&accept=yes" class="waves-effect waves-light">Cursos</a></li>
         <li><a href="'.BASE_DIR.'/home/certificados/&accept=yes" class="waves-effect waves-light">Certificados</a></li>
         <li><a href="'.BASE_DIR.'/la_bolsa/trabajos/&accept=yes" class="waves-effect waves-light">La Bolsa</a></li>
@@ -233,6 +233,7 @@ $resource_script = '
 	<script src="'.BASE_DIR.'/design/js/notify/pnotify.custom.min.js" type="text/javascript"></script>
 	<!--efectos-->
 	<script src="'.BASE_DIR.'/design/js/wow/wow.min.js"></script>
+  <script type="text/javascript" src="'.BASE_DIR.'/design/js/intro/intro.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js"></script>
 	<script>
 		new WOW().init();
