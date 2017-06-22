@@ -42,9 +42,9 @@ if (isset($_GET['accept'])) {
             <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi Cuenta <i class="fa fa-angle-down" aria-hidden="true"></i></a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <a href="desk/profile"><li class="active dropdown-item"><img style="width:16px; margin-top:5px; margin-right:5px; float:left;" src="'.BASE_DIR.'/design/css/imagenes/favicon.ico"> Mi Perfil Gurú</li></a>
-                <a href="desk/my-certificate"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
+                <a href="'.BASE_DIR.'/desk/mis_certificados/"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
                 <a href="desk/teach/teacher"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
-                <a href="desk/learn"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
+                <a href="'.BASE_DIR.'/desk/mis_cursos/"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
                 <a href="desk/bag/list-my-job"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
                 <a href="desk/data_user"><li class="dropdown-item"><i class="blue-dark fa fa-database" aria-hidden="true"></i> Mis Datos</li></a>
                 <a href="desk/security"><li class="dropdown-item"><i class="orange-sun fa fa-lock" aria-hidden="true"></i> Seguridad</li></a>
@@ -69,9 +69,9 @@ if (isset($_GET['accept'])) {
             <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi Cuenta <i class="fa fa-angle-down" aria-hidden="true"></i></a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <a href="desk/profile"><li class="active dropdown-item"><img style="width:16px; margin-top:5px; margin-right:5px; float:left;" src="'.BASE_DIR.'/design/css/imagenes/favicon.ico"> Mi Perfil Gurú</li></a>
-                <a href="desk/my-certificate"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
+                <a href="'.BASE_DIR.'/desk/mis_certificados/"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
                 <a href="desk/teach/teacher"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
-                <a href="desk/learn"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
+                <a href="'.BASE_DIR.'/desk/mis_cursos/"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
                 <a href="desk/bag/list-my-job"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
                 <a href="desk/data_user"><li class="dropdown-item"><i class="blue-dark fa fa-database" aria-hidden="true"></i> Mis Datos</li></a>
                 <a href="desk/security"><li class="dropdown-item"><i class="orange-sun fa fa-lock" aria-hidden="true"></i> Seguridad</li></a>

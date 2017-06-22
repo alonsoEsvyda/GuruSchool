@@ -153,7 +153,7 @@
                             if (TestMail($StrMail)) {
                                 $user = $this->session->user_session($StrMail);
                                 if ($user == false) {//validamos si la consulta no trajo ningún registro
-                                    header("Location:../../iniciar-sesion?request=Usuario Invalido");
+                                    header("Location:".BASE_DIR."/home/iniciar_session&request=Usuario Invalido");
                                 }else{
                                     foreach ($user as $session) {
                                         if (password_verify($StrPass,$session[2])) {

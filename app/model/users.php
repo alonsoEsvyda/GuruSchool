@@ -114,5 +114,52 @@
             $SqlGetData->close();
             return $ArrayData;
         }
+
+        public function GetDataCertified($IdUser){
+            $SqlGetIdCourse=$this->db()->prepare("SELECT Int_IdCurso,Vc_NumberCertified FROM Certificados_Usuarios WHERE  Int_Fk_IdUsuario = ?");
+            $SqlGetIdCourse->bind_param("i",$IdUser);
+            $SqlGetIdCourse->execute();
+            $SqlGetIdCourse->store_result();
+                if ($SqlGetIdCourse->num_rows==0) {
+                    $ArrayData=false;
+                }else{
+                    $SqlGetIdCourse->bind_result($IdCourse,$IntNumberCertified);
+                    while ($SqlGetIdCourse->fetch()) {
+                        $SqlGetCourse=$this->db()->prepare("SELECT Id_Pk_Curso,Vc_NombreCurso,Vc_Imagen_Promocional,Int_Fk_IdUsuario FROM G_Cursos WHERE  Id_Pk_Curso = ?");
+                        $SqlGetCourse->bind_param("i",$IdCourse);
+                        $SqlGetCourse->execute();
+                        $SqlGetCourse->store_result();
+                        $SqlGetCourse->bind_result($IntIdCourse,$StrNameCourse,$StrImage,$IntIdUser);
+                        $SqlGetCourse->fetch();
+                        $ArrayData[]=array($IntIdCourse,$StrNameCourse,$StrImage,$IntIdUser,$IntNumberCertified);
+                    }
+                }
+            $SqlGetIdCourse->close();
+            return $ArrayData;
+        }
+
+        public function ValidateissetCertified($IdCourse,$IdUser,$NumberCertified){
+            //validamos que el curso pertenezca al usuario
+            $SqlValidate=$this->db()->prepare("SELECT Int_IdCurso FROM Certificados_Usuarios WHERE Int_IdCurso = ? AND Int_Fk_IdUsuario = ? AND Vc_NumberCertified = ?");
+            $SqlValidate->bind_param("iii", $IdCourse,$IdUser,$NumberCertified);
+            $SqlValidate->execute();
+            $SqlValidate->store_result();
+            if ($SqlValidate->num_rows == 0) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        public function GetDataUserCertified($IdCourse,$IdUser){
+            $SqlGetData=$this->db()->prepare("SELECT a.Vc_NombreCurso,b.Vc_NombreUsuario,b.Int_Cedula,c.Vc_NumberCertified FROM Certificados_Usuarios AS c INNER JOIN G_Cursos AS a ON c.Int_IdCurso=a.Id_Pk_Curso INNER JOIN G_Datos_Usuario AS b ON c.Int_Fk_IdUsuario=b.Int_Fk_IdUsuario WHERE c.Int_IdCurso = ? AND c.Int_Fk_IdUsuario = ?");
+            $SqlGetData->bind_param("ii",$IdCourse,$IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            $SqlGetData->bind_result($StrNameCourse,$StrNameUser,$IntDniUser,$IntCertified);
+            $SqlGetData->fetch();
+            return array($StrNameCourse,$StrNameUser,$IntDniUser,$IntCertified);
+            $SqlGetData->close();
+        }
     }
 ?>

@@ -36,6 +36,7 @@
  */
 	define("DEFAULT_CONTROLLER", "home");
 	define("DEFAULT_METHOD", "index");
+	define("SERVER_DIR", "http://localhost/");
 	define("BASE_DIR", dirname($_SERVER['PHP_SELF']));
 	define("PATH_CONTROLLER","app/controller/");
 	define("PATH_MODEL","app/model/");

@@ -195,7 +195,7 @@
             $SqlGetId->execute();
             $SqlGetId->store_result();
             if ($SqlGetId->num_rows==0) {
-                $ArrayData=false;
+                $ArrayData = false;
             }else{
                 $SqlGetId->bind_result($IntIdCurso);
                 while ($SqlGetId->fetch()) {

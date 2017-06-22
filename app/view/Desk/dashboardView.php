@@ -15,7 +15,7 @@
             <hr>
             <!--Cursos que Aprendo-->
             <div data-step="1" data-intro="<h1 class='h1-black'>Hola!!</h1><br> Este es el Panel del Estudiante, aquí verás los cursos en los que te inscribas y el progreso de cada uno." style="border-top:2px solid rgba(22, 160, 133,1.0);" class="content-description table-responsive">
-              <a href="learn"><h1 class="h1-hover h1-black">Cursos que Aprendo</h1></a>
+              <a href="<?= BASE_DIR; ?>/desk/mis_cursos/"><h1 class="h1-hover h1-black">Cursos que Aprendo</h1></a>
               <table class="table table-hover">
                   <tbody>
                     <?php 
@@ -34,17 +34,17 @@
                           ?>
                             <tr>
                               <td>
-                                <a style="overflow: hidden;" href="classroom/player/<?php echo $Data[0]; ?>/">
+                                <a style="overflow: hidden;" href="classroom/player/<?= $Data[0]; ?>/">
                                   <p style="float: left;" >
                                     <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <?php echo ucwords($Data[1]); ?>
+                                    <?= ucwords($Data[1]); ?>
                                   </p>
                                   <div style="height: 3px; float:right; width: 30%;" class="progress-width  margin-lestb-top progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $SQLProgressCourse; ?>"
-                                    aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $Data[6]; ?>%">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="<?= $SQLProgressCourse; ?>"
+                                    aria-valuemin="0" aria-valuemax="100" style="width:<?= $Data[6]; ?>%">
                                     </div>
                                   </div>
-                                  <p class="margin-lestc-right darkgray " style="float: right;"><?php echo $Data[6]; ?> %</p>
+                                  <p class="margin-lestc-right darkgray " style="float: right;"><?= $Data[6]; ?> %</p>
                                 </a>
                               </td>
                             </tr>
@@ -81,15 +81,15 @@
                                 switch ($Data[3]) {
                                   case 'Publicado':
                                       ?>
-                                        <a style="overflow: hidden;" href="details/<?php echo $Data[0]; ?>/<?php echo str_replace(" ","-",$Data[1]); ?>/">
+                                        <a style="overflow: hidden;" href="details/<?= $Data[0]; ?>/<?= str_replace(" ","-",$Data[1]); ?>/">
                                           <div style="float: left;">
                                             <p>
                                               <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <?php echo ucwords($Data[1])."  <span class='label label-success'>Publicado</span>"; ?>
+                                            <?= ucwords($Data[1])."  <span class='label label-success'>Publicado</span>"; ?>
                                             </p>
                                           </div>
                                           <div class="attribute-div" style="float: right;">
-                                            <p><i class="fa fa-user" aria-hidden="true"></i>&nbsp; <?php echo $Data[6]; ?> Alumnos</p>
+                                            <p><i class="fa fa-user" aria-hidden="true"></i>&nbsp; <?= $Data[6]; ?> Alumnos</p>
                                           </div>
                                         </a>
                                       <?php
@@ -97,10 +97,10 @@
                                   
                                   case 'Rechazado':
                                       ?>
-                                        <a href="teach/update_course/<?php echo $Data[0]; ?>">
+                                        <a href="teach/update_course/<?= $Data[0]; ?>">
                                           <p>
                                             <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <?php echo $Data[1]."  <span class='label label-danger'>Rechazado</span>"; ?>
+                                            <?= $Data[1]."  <span class='label label-danger'>Rechazado</span>"; ?>
                                           </p>
                                         </a>
                                       <?php
@@ -108,10 +108,10 @@
 
                                   case 'Aprobado':
                                       ?>
-                                        <a href="teach/up_video_course/<?php echo $Data[0]; ?>">
+                                        <a href="teach/up_video_course/<?= $Data[0]; ?>">
                                           <p>
                                             <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <?php echo $Data[1]."  <span class='label label-info'>Aprobado</span>"; ?>
+                                            <?= $Data[1]."  <span class='label label-info'>Aprobado</span>"; ?>
                                           </p>
                                         </a>
                                       <?php
@@ -121,7 +121,7 @@
                                       ?>
                                         <p>
                                           <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                          <?php echo $Data[1]."  <span class='label label-warning'>En Revisión</span>"; ?>
+                                          <?= $Data[1]."  <span class='label label-warning'>En Revisión</span>"; ?>
                                         </p>
                                       <?php
                                     break;
@@ -130,7 +130,7 @@
                                       ?>
                                         <p>
                                           <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                          <?php echo $Data[1]."  <span class='label label-warning'>En Revisión Video</span>"; ?>
+                                          <?= $Data[1]."  <span class='label label-warning'>En Revisión Video</span>"; ?>
                                         </p>
                                       <?php
                                     break;    
@@ -176,7 +176,7 @@
                           foreach ($ArrDataUser as $DataPerson) {
                               ?>
                                 <div class="img-fluid-preview">
-                                    <img class="img-fluid" src="<?= BASE_DIR; ?>/design/img/Perfil_Usuarios/<?php echo $DataPerson[6]; ?>" alt="Card image cap">
+                                    <img class="img-fluid" src="<?= BASE_DIR; ?>/design/img/Perfil_Usuarios/<?= $DataPerson[6]; ?>" alt="Card image cap">
                                 </div>
                               <?php
                             }
@@ -203,14 +203,14 @@
               ?>
               <div class="hidden-xs">
                 <hr>
-                  <a href="my-certificate"><img data-step="5" data-intro="Descarga los certificados que hallas ganado" style="width:100%; height:auto;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_certificado.png"></a>
+                  <a href="<?= BASE_DIR; ?>/desk/mis_certificados/"><img data-step="5" data-intro="Descarga los certificados que hallas ganado" style="width:100%; height:auto;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_certificado.png"></a>
                 <hr>
                   <a href="teach/teacher"><img data-step="6" data-intro="Tienes algún talento? Eseñalo y Gana Dinero." style="width:100%; height:auto; margin-bottom:40px;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_maestro.png"></a>
               </div>
               <div class="visible-xs">
                 <center>
                   <hr>
-                    <a href="my-certificate"><img style="width:50%; height:auto;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_certificado.png"></a>
+                    <a href="<?= BASE_DIR; ?>/desk/mis_certificados/"><img style="width:50%; height:auto;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_certificado.png"></a>
                   <hr>
                     <a href="teach/teacher"><img style="width:50%; height:auto; margin-bottom:40px;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_maestro.png"></a>
                 </center>
