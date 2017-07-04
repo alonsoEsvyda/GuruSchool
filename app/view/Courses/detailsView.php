@@ -138,7 +138,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <center>
-                                            <img style="width:24%;border-radius: 100%;" class="img-fluid" src="<?= BASE_DIR; ?>/design/img/Perfil_Usuarios/<?= $StrImageMin; ?>" alt="Card image cap">
+                                            <div style="display: block;width: 110px;height: 110px;margin: 10px auto;border-radius: 500%;overflow: hidden;display:flex;align-items:center;justify-content:center;">
+                                                <img style="width: 112%;" class="img-fluid" src="<?= BASE_DIR; ?>/design/img/Perfil_Usuarios/<?= $StrImageMin; ?>" alt="Card image cap">
+                                            </div>
                                             <h1 style="font-weight: bolder; color:black;" class="card-title"><?= $StrName; ?></h1>
                                             <p class="darkgray"><?= $StrProfession; ?></p>
                                         </center>
@@ -146,7 +148,7 @@
                                         <p><?= $StrBiogra; ?></p>
                                     </div>
                                     <div class="no-margin modal-footer" id="footer">
-                                        <a style="width: 100%;" class="btn btn-info buttonblue" href="public-profile/<?= $ArrEmailData; ?>" target="_blank">VISÍTA EL PERFIL DEL TUTOR</a>
+                                        <a style="width: 100%;" class="btn btn-info buttonblue" href="<?= BASE_DIR; ?>/desk/perfil_publico/<?= $EmailTeach; ?>" target="_blank">VISÍTA EL PERFIL DEL TUTOR</a>
                                     </div>
                                 </div>
                             </div>

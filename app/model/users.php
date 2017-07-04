@@ -71,6 +71,18 @@
             }
         }
 
+        public function ValidateAllDataProfessional($IdSession){
+            $SqlValidate=$this->db()->prepare("SELECT Vc_Profesion,Txt_Biografia,Txt_Facebook,Txt_Twitter,Txt_Google,Txt_LinkedIn FROM G_Profesion_Usuario WHERE Int_Fk_DatosUsuario = ?");
+            $SqlValidate->bind_param("i",$IdSession);
+            $SqlValidate->execute();
+            $SqlValidate->store_result();
+            if ($SqlValidate->num_rows == 0) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+
         public function ValidateDataAccount($IdUser){//validamos que el usuario halla llenado los datos bancarios
             $SqlGetData=$this->db()->prepare("SELECT Vc_Cuenta FROM G_Cuenta_Usuario WHERE Int_Fk_DatosUsuario = ?");
             $SqlGetData->bind_param("i", $IdUser);
@@ -80,6 +92,46 @@
                 return false;
             }else{
                 return true;
+            }
+        }
+
+        public function InsertDataBank($SessionId,$CryptAccount,$StrBank){
+            $SqlInsertData=$this->db()->prepare("INSERT INTO G_Cuenta_Usuario (Int_Fk_DatosUsuario,Vc_Cuenta,Vc_Banco) VALUES (?,?,?) ");
+            $SqlInsertData->bind_param("iss", $SessionId,$CryptAccount,$StrBank);
+            if ($SqlInsertData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function UpdateDataBank($CryptAccount,$StrBank,$SessionId){
+            $SqlInsertData=$this->db()->prepare("UPDATE G_Cuenta_Usuario SET Vc_Cuenta=?, Vc_Banco=? WHERE  Int_Fk_DatosUsuario = ?");
+            $SqlInsertData->bind_param("ssi", $CryptAccount,$StrBank,$SessionId);
+            if ($SqlInsertData->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function InsertDataProfessional($IdSession,$StrProfession,$StrBiografia,$UrlFacebook,$UrlTwitter,$UrlGoogle,$UrlLinkedIn){
+            $SqlInsertData = $this->db()->prepare("INSERT INTO G_Profesion_Usuario (Int_Fk_DatosUsuario,Vc_Profesion,Txt_Biografia,Txt_Facebook,Txt_Twitter,Txt_Google,Txt_LinkedIn) VALUES (?,?,?,?,?,?,?) ");
+            $SqlInsertData->bind_param("issssss",$IdSession,$StrProfession,$StrBiografia,$UrlFacebook,$UrlTwitter,$UrlGoogle,$UrlLinkedIn);
+            if ($SqlInsertData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function UpdateDataProfessional($StrProfession,$StrBiografia,$UrlFacebook,$UrlTwitter,$UrlGoogle,$UrlLinkedIn,$IdSession){
+            $SqlInsertData=$this->db()->prepare("UPDATE G_Profesion_Usuario SET Vc_Profesion=?,Txt_Biografia=?,Txt_Facebook=?,Txt_Twitter=?,Txt_Google=?,Txt_LinkedIn=? WHERE  Int_Fk_DatosUsuario = ?");
+            $SqlInsertData->bind_param("ssssssi",$StrProfession,$StrBiografia,$UrlFacebook,$UrlTwitter,$UrlGoogle,$UrlLinkedIn,$IdSession);
+            if ($SqlInsertData->execute()){
+                return true;
+            }else{
+                return false;
             }
         }
 
@@ -97,6 +149,37 @@
             }
             $SqlGetData->close();
             return $ArrayData;
+        }
+
+        public function InsertDataPersonal($StrName,$IntDni,$StrAge,$StrCountry,$StrCity,$resFoto,$minFoto,$SessionId,$IntTelf){
+            $SqlUpdateData=$this->db()->prepare("INSERT INTO G_Datos_Usuario (Vc_NombreUsuario,Int_Cedula,Int_Edad,Vc_Pais,Vc_Ciudad,Txt_ImagenUsuario,Txt_ImagenMin,Int_Fk_IdUsuario,Vc_Telefono) VALUES (?,?,?,?,?,?,?,?,?) ");
+            $SqlUpdateData->bind_param("siissssii",$StrName,$IntDni,$StrAge,$StrCountry,$StrCity,$resFoto,$minFoto,$SessionId,$IntTelf);
+            if ($SqlUpdateData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function UpdateDataUser($StrName,$IntDni,$StrAge,$StrCountry,$StrCity,$resFoto,$minFoto,$IntTelf,$SessionId){
+            //Actualizamos los datos
+            $SqlUpdateData=$this->db()->prepare("UPDATE G_Datos_Usuario SET Vc_NombreUsuario=?,Int_Cedula=?,Int_Edad=?,Vc_Pais=?,Vc_Ciudad=?,Txt_ImagenUsuario=?,Txt_ImagenMin=?,Vc_Telefono=? WHERE Int_Fk_IdUsuario = ? ");
+            $SqlUpdateData->bind_param("siissssii",$StrName,$IntDni,$StrAge,$StrCountry,$StrCity,$resFoto,$minFoto,$IntTelf,$SessionId);
+            if ($SqlUpdateData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function UpdateDataWithOutPhoto($StrName,$IntDni,$StrAge,$StrCountry,$StrCity,$IntTelf,$SessionId){
+            $SqlUpdateData = $this->db()->prepare("UPDATE G_Datos_Usuario SET Vc_NombreUsuario=?,Int_Cedula=?,Int_Edad=?,Vc_Pais=?,Vc_Ciudad=?,Vc_Telefono=? WHERE Int_Fk_IdUsuario = ?");
+            $SqlUpdateData->bind_param("siissii",$StrName,$IntDni,$StrAge,$StrCountry,$StrCity,$IntTelf,$SessionId);
+            if ($SqlUpdateData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
         }
 
         public function DataUserProfesional($IdUser){//Traemos datos profesionales del usuario
@@ -160,6 +243,50 @@
             $SqlGetData->fetch();
             return array($StrNameCourse,$StrNameUser,$IntDniUser,$IntCertified);
             $SqlGetData->close();
+        }
+
+        public function GetSocialMediaUser($IdUser){
+            $SqlGetData=$this->db()->prepare("SELECT Txt_Facebook,Txt_Google,Txt_LinkedIn,Txt_Twitter FROM G_Profesion_Usuario WHERE Int_Fk_DatosUsuario= ?");
+            $SqlGetData->bind_param("i", $IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            if ($SqlGetData->num_rows==0) {
+                $ArrayData=false;
+            }else{
+                $SqlGetData->bind_result($Face,$Google,$Linked,$Twitt);
+                $SqlGetData->fetch();
+                $ArrayData[]=array($Face,$Google,$Linked,$Twitt);
+            }
+            $SqlGetData->close();
+            return $ArrayData;
+        }
+
+        public function ReturnIdEmail($Email){
+            $SqlGetData=$this->db()->prepare("SELECT Id_Pk_Usuario FROM G_Usuario WHERE Vc_Correo = ?");
+            $SqlGetData->bind_param("s", $Email);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            $SqlGetData->bind_result($StrId);
+            $SqlGetData->fetch();
+            $ArrayData=$StrId;
+            $SqlGetData->close();
+            return $ArrayData;
+        }
+
+        public function GetAccountUser($IdUser){
+            $SqlGetData=$this->db()->prepare("SELECT Vc_Cuenta,Vc_Banco FROM G_Cuenta_Usuario WHERE Int_Fk_DatosUsuario= ?");
+            $SqlGetData->bind_param("i", $IdUser);
+            $SqlGetData->execute();
+            $SqlGetData->store_result();
+            if ($SqlGetData->num_rows==0) {
+                $ArrayData=0;
+            }else{
+                $SqlGetData->bind_result($Account,$Bank);
+                $SqlGetData->fetch();
+                $ArrayData[]=array($Account,$Bank);
+            }
+            $SqlGetData->close();
+            return $ArrayData;
         }
     }
 ?>

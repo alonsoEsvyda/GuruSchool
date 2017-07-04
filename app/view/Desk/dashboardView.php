@@ -192,7 +192,7 @@
                                 <?php
                               }else{
                                 ?>
-                                  <a href="profile"  class="btn btn-primary">Ver</a>
+                                  <a href="<?= BASE_DIR; ?>/desk/perfil/"  class="btn btn-primary">Ver</a>
                                 <?php
                               }
                             ?>

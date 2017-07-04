@@ -91,6 +91,61 @@
             $this->render("Desk","certificateView.php",array("GetDataCertified"=>$GetDataCertified));
         }
 
+        public function perfil(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            //traemos los datos personales del usuario en sesión
+            $ArrDataUser = $this->users->DataUserPersonal($_SESSION['Data']['Id_Usuario']);
+            //traemos los datos profesionales del usuario en sesión
+            $ArrDataProfUser = $this->users->DataUserProfesional($_SESSION['Data']['Id_Usuario']);
+            //traemos las redes sociales que halla insertado el usuario
+            $ArrSocialMedia = $this->users->GetSocialMediaUser($_SESSION['Data']['Id_Usuario']);
+            //traemos el correo del usuario para enviarlo a su perfil público
+            $ArrEmailData = $this->users->GetEmailUser($_SESSION['Data']['Id_Usuario']);
+
+            $this->render("Desk","profileView.php",array("ArrDataUser"=>$ArrDataUser,
+                                                            "ArrDataProfUser"=>$ArrDataProfUser,
+                                                            "ArrSocialMedia"=>$ArrSocialMedia,
+                                                            "ArrEmailData"=>$ArrEmailData));
+        }
+
+        public function perfil_publico(){
+            if (!isset($_GET['parametro']) || $_GET['parametro']=="") {
+                redirect("desk","dashboard","request","Ups, hubo un error","");
+            }else{
+                if (TestMail($_GET['parametro']) == false) {
+                  redirect("desk","dashboard","request","Escriba un Correo Valido","");
+                }else{
+                  $StrGetEmail = TestInput($_GET['parametro']);
+                  //treamos el metodo que nos retorna el id por el correo que pasamos por parametro
+                  $IntDataId = $this->users->ReturnIdEmail($StrGetEmail);
+                  //traemos el metodo que nos retorna los datos personales del usuario
+                  $ArrDataUser = $this->users->DataUserPersonal($IntDataId);
+                  //traemos el metodo que nos retorna los datos profesionales del usuario
+                  $ArrDataProfUser = $this->users->DataUserProfesional($IntDataId);
+                  //traemos el metodo que nos retorna las redes sociales que halla insertado el usuario
+                  $ArrSocialMedia = $this->users->GetSocialMediaUser($IntDataId);
+                  //Traemos el metodo que nos retorna los cursos que el usuario aprende
+                  $ArrDataCourse = $this->courses->SQLGetCoursesUser($IntDataId);
+                  //traemos el metodo que nos retorna los cursos que el usuario enseña
+                  $ArrDataTeachCourses = $this->courses->GetMyPublicCourses($IntDataId,"Publicado");
+                }
+            }
+
+            $this->render("Desk","publicProfileView.php",array("ArrDataUser"=>$ArrDataUser,
+                                                                "ArrDataProfUser"=>$ArrDataProfUser,
+                                                                "ArrSocialMedia"=>$ArrSocialMedia,
+                                                                "ArrDataCourse"=>$ArrDataCourse,
+                                                                "ArrDataTeachCourses"=>$ArrDataTeachCourses));
+        }
+
         public function cargar_certificado(){
             //Asignamos el tiempo actual a la variable de sesión
             $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");

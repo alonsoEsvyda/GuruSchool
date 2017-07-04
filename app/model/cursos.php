@@ -232,5 +232,22 @@
             $SqlGetDataTeach->close();
             return $ArrayData;
         }
+
+        public function GetMyPublicCourses($IdUser,$State){//Aquí traemos los cursos que enseña el usuario en sesión PUBLICADOS para su perfíl público
+            $SqlGetDataTeach=$this->db()->prepare("SELECT Id_Pk_Curso,Vc_NombreCurso,Vc_Imagen_Promocional,Vc_EstadoCurso,Vc_TipoCurso,Int_PrecioCurso FROM G_Cursos WHERE Int_Fk_IdUsuario = ? AND Vc_EstadoCurso= ?");
+            $SqlGetDataTeach->bind_param("is", $IdUser,$State);
+            $SqlGetDataTeach->execute();
+            $SqlGetDataTeach->store_result();
+            if ($SqlGetDataTeach->num_rows==0) {
+                $ArrayData=false;
+            }else{
+                $SqlGetDataTeach->bind_result($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice);
+                while ($SqlGetDataTeach->fetch()) {
+                    $ArrayData[]= array($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice);
+                }
+            }
+            $SqlGetDataTeach->close();
+            return $ArrayData;
+        } 
     }
 ?>
