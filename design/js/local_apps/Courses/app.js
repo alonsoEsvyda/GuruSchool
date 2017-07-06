@@ -39,4 +39,8 @@ app.controller("ListCourses", function($scope,$http){
 			});
 	}
 
+	ctrl.replaceFunction = function(item,target,replace){
+		return item.split(target).join(replace);
+	}
+
 });

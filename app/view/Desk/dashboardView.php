@@ -57,7 +57,7 @@
             </div>
             <!--Cursos que Enseño-->
             <div data-step="2" data-intro="<h1 class='intro-tittle-letter h1-black'>Bien!!</h1><br> Esta es la Sección del Maestro, encuentra los cursos que enseñas, el estado, y más herramientas que te ayudarán a desempeñar tu labor como Tutor." style="border-top:2px solid rgba(230, 126, 34,1.0);" class="margin-top  content-description table-responsive">
-              <a href="teach/teacher"><h1 data-step="3" data-intro="Da click aquí e ingresa a la Plataforma del Maestro" class="h1-hover h1-black">Plataforma del Maestro</h1></a>
+              <a href="<?= BASE_DIR; ?>/maestros/mis_cursos/"><h1 data-step="3" data-intro="Da click aquí e ingresa a la Plataforma del Maestro" class="h1-hover h1-black">Plataforma del Maestro</h1></a>
               <p>Cursos que enseño:</p>
               <table class="table table-hover">
                   <tbody>
@@ -81,7 +81,7 @@
                                 switch ($Data[3]) {
                                   case 'Publicado':
                                       ?>
-                                        <a style="overflow: hidden;" href="details/<?= $Data[0]; ?>/<?= str_replace(" ","-",$Data[1]); ?>/">
+                                        <a style="overflow: hidden;" href="<?= BASE_DIR; ?>/cursos/detalles/<?= $Data[0]; ?>/<?= str_replace(" ","-",$Data[1]); ?>/">
                                           <div style="float: left;">
                                             <p>
                                               <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

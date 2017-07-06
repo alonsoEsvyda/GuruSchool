@@ -37,6 +37,20 @@
             return $ArrayData;
         }
 
+        public function GetPasswordHash($IdUser){
+            $SQLValidatePass=$this->db()->prepare("SELECT Vc_Password FROM G_Usuario WHERE Id_Pk_Usuario = ?");
+            $SQLValidatePass->bind_param("i", $IdUser);
+            $SQLValidatePass->execute();
+            $SQLValidatePass->store_result();
+            if ($SQLValidatePass->num_rows==0) {
+                return false;
+            }else{
+                $SQLValidatePass->bind_result($HashPassword);
+                $SQLValidatePass->fetch();
+                return $HashPassword;
+            }
+        }
+
         public function validateDataPersonalUser($IdUser){
             $SqlGetData=$this->db()->prepare("SELECT a.Vc_NombreUsuario,a.Int_Cedula,a.Int_Edad,a.Vc_Pais,a.Vc_Ciudad,b.Vc_Correo FROM G_Datos_Usuario AS a INNER JOIN G_Usuario AS b ON a.Int_Fk_IdUsuario=b.Id_Pk_Usuario WHERE a.Int_Fk_IdUsuario = ?");
             $SqlGetData->bind_param("i", $IdUser);
@@ -287,6 +301,18 @@
             }
             $SqlGetData->close();
             return $ArrayData;
+        }
+
+        public function UpdatePasswordUser($StrPassHash,$IdUser){
+            //Actualizamos la contraseña 
+            $SQLUpdate=$this->db()->prepare("UPDATE G_Usuario SET Vc_Password = ?  WHERE Id_Pk_Usuario = ? ");
+            $SQLUpdate->bind_param("si",$StrPassHash,$IdUser);
+            //verificamos que se ejecute correctamente la consulta
+            if ($SQLUpdate->execute()) {
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 ?>

@@ -45,9 +45,9 @@ if (isset($_GET['accept'])) {
                 <a href="'.BASE_DIR.'/desk/mis_certificados/"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
                 <a href="desk/teach/teacher"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
                 <a href="'.BASE_DIR.'/desk/mis_cursos/"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
-                <a href="desk/bag/list-my-job"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
+                <a href="'.BASE_DIR.'/la_bolsa/mis_vacantes/"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
                 <a href="'.BASE_DIR.'/usuarios/mis_datos/"><li class="dropdown-item"><i class="blue-dark fa fa-database" aria-hidden="true"></i> Mis Datos</li></a>
-                <a href="desk/security"><li class="dropdown-item"><i class="orange-sun fa fa-lock" aria-hidden="true"></i> Seguridad</li></a>
+                <a href="'.BASE_DIR.'/usuarios/seguridad/"><li class="dropdown-item"><i class="orange-sun fa fa-lock" aria-hidden="true"></i> Seguridad</li></a>
                 <a href="'.BASE_DIR.'/session/logout/"><li class="dropdown-item"><i class="red-orange fa fa-times" aria-hidden="true"></i> Salir</li></a>
             </ul>
         </li>';
@@ -72,9 +72,9 @@ if (isset($_GET['accept'])) {
                 <a href="'.BASE_DIR.'/desk/mis_certificados/"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
                 <a href="desk/teach/teacher"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
                 <a href="'.BASE_DIR.'/desk/mis_cursos/"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
-                <a href="desk/bag/list-my-job"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
+                <a href="'.BASE_DIR.'/la_bolsa/mis_vacantes/"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
                 <a href="'.BASE_DIR.'/usuarios/mis_datos/"><li class="dropdown-item"><i class="blue-dark fa fa-database" aria-hidden="true"></i> Mis Datos</li></a>
-                <a href="desk/security"><li class="dropdown-item"><i class="orange-sun fa fa-lock" aria-hidden="true"></i> Seguridad</li></a>
+                <a href="'.BASE_DIR.'/usuarios/seguridad/"><li class="dropdown-item"><i class="orange-sun fa fa-lock" aria-hidden="true"></i> Seguridad</li></a>
                 <a href="'.BASE_DIR.'/session/logout/"><li class="dropdown-item"><i class="red-orange fa fa-times" aria-hidden="true"></i> Salir</li></a>
             </ul>
         </li>';
@@ -108,9 +108,6 @@ $menuFront = '
 ';
 // Process for render the menú 
 
-
-
-$menu2 = "";
 
 $container = "";
 

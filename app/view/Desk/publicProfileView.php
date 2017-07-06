@@ -138,7 +138,7 @@
                   <div class="card-image hidden-xs">
                       <div class="view overlay hm-white-slight z-depth-1">
                           <img src="<?= BASE_DIR; ?>/design/img/Cursos_Usuarios/<?php echo $DataCourse[2]; ?>" class="img-responsive" alt="">
-                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataCourse[0]; ?>/">
+                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataCourse[0]; ?>/<?= str_replace(" ","-",$DataCourse[1]); ?>&accept=yes">
                               <div class="mask waves-effect"></div>
                           </a>
                       </div>
@@ -146,7 +146,7 @@
                   <div class="card-image-res visible-xs">
                       <div class="view overlay hm-white-slight z-depth-1">
                           <img src="<?= BASE_DIR; ?>/design/img/Cursos_Usuarios/<?php echo $DataCourse[2]; ?>" class="img-responsive" alt="">
-                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataCourse[0]; ?>/">
+                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataCourse[0]; ?>/<?= str_replace(" ","-",$DataCourse[1]); ?>&accept=yes">
                               <div class="mask waves-effect"></div>
                           </a>
                       </div>
@@ -205,7 +205,7 @@
                   <div class="card-image hidden-xs">
                       <div class="view overlay hm-white-slight z-depth-1">
                           <img src="<?= BASE_DIR; ?>/design/img/Cursos_Usuarios/<?php echo $DataTeach[2]; ?>" class="img-responsive" alt="">
-                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataTeach[0]; ?>/">
+                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataTeach[0]; ?>/<?= str_replace(" ","-",$DataTeach[1]); ?>&accept=yes">
                               <div class="mask waves-effect"></div>
                           </a>
                       </div>
@@ -213,7 +213,7 @@
                   <div class="card-image-res visible-xs">
                       <div class="view overlay hm-white-slight z-depth-1">
                           <img src="<?= BASE_DIR; ?>/design/img/Cursos_Usuarios/<?php echo $DataTeach[2]; ?>" class="img-responsive" alt="">
-                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataTeach[0]; ?>/">
+                          <a href="<?= BASE_DIR; ?>/cursos/detalles/<?php echo $DataTeach[0]; ?>/<?= str_replace(" ","-",$DataTeach[1]); ?>&accept=yes">
                               <div class="mask waves-effect"></div>
                           </a>
                       </div>

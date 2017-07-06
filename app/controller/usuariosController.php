@@ -64,6 +64,68 @@
                                                             "GetCountry"=>$GetCountry));
         }
 
+        public function seguridad(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            $this->render("Users","securityView.php",array());
+        }
+
+        public function changePassword(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            //definimos las variables y las sanamos
+            $StrActualPass = TestInput($_POST['ActualPass']);
+            $NewPass = TestInput($_POST['NewPass']);
+            $RepeatPass = TestInput($_POST['RepeatPass']);
+            if (empty($StrActualPass) || empty($NewPass) || empty($RepeatPass)) {
+                redirect("usuarios","seguridad","request","Llene todos los Datos","");
+            }else{
+                //validamos que el password actual sea correcto
+                $SQLValidatePass = $this->users->GetPasswordHash($_SESSION['Data']['Id_Usuario']);
+                if (!$SQLValidatePass) {
+                    redirect("usuarios","seguridad","request","Este usuario no tiene password","");
+                }else{
+                    //validamos que la contraseña coincida al hash guardado en la BD
+                    if (password_verify($StrActualPass,$SQLValidatePass)) {
+                        //validamos que la contraseña sea igual a la contraseña que se repite
+                        if ($RepeatPass == $NewPass) {
+                            //validamos que la contraseña sea seguray cumpla con lo que exige el sistema
+                            if (TestPassword($NewPass,BASE_DIR."/usuarios/seguridad/")) {
+                                //convertismo las contraseña nueva a un Hash
+                                $StrPassHash = HashPassword($NewPass);
+                                //Actualizamos la contraseña 
+                                $SQLUpdate=$this->users->UpdatePasswordUser($StrPassHash,$_SESSION['Data']['Id_Usuario']);
+                                //verificamos que se ejecute correctamente la consulta
+                                if ($SQLUpdate) {
+                                    redirect("usuarios","seguridad","requestok","Contraseña Actualizada Correctamente","");
+                                }else{
+                                    redirect("usuarios","seguridad","request","Hubo un Error, Intente más Tarde..","");
+                                }
+                            }
+                        }else{
+                            redirect("usuarios","seguridad","request","Campos no Coinciden, Escriba bien la Contraseña","");
+                        }
+                    }else{
+                        redirect("usuarios","seguridad","request","Password Actual Incorrecto","");
+                    }
+                }
+            }
+        }
+
         public function updateDataUser(){
             //Asignamos el tiempo actual a la variable de sesión
             $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
