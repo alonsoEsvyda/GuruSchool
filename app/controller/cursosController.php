@@ -32,7 +32,7 @@
             $dataAccordeon = $this->courses->GetCategoriesAccordeon();
             $this->render("Courses","listView.php",array("Accordeon" => $dataAccordeon));
         }
-
+        
         public function ApilistCourses(){
             if ($this->api_rest->API() == "POST") {
                 $courses = $this->courses->GetViewCourses(0);

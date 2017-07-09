@@ -65,8 +65,10 @@
 				    				<h1 class="h1-bold-three">{{list.subcategorie}}</h1>
 					                <hr>	
 				    			</div>
-				    			<div id="content-contenible-card" ng-repeat="courses in list.courses_get">
-					    			<div class="contenible-card" >
+				    			<div id="content-contenible-card" 
+				    				 ng-repeat="courses in list.courses_get"
+				    				 ng-show="!list.loading.all">
+					    			<div class="contenible-card">
 						                <div  class="card hoverable" style="height: auto;" ng-hide="courses.bool == 'falso'">
 						                    <div class="card-image hidden-xs">
 						                        <div class="view overlay hm-white-slight z-depth-1">
@@ -102,6 +104,18 @@
 				    						<h2 class='h1-light black-gray'>!Lo Sentimos¡</h2><br><h4 class='semi-gray'>No hay Cursos en esta Sub-Categoría</h4><br>
 				    					</center>
 				    				</div>
+				    			</div>
+				    			<div ng-show="list.loading.all">
+				    				<center style="margin-top:100px">
+										<div class="loader rspin">
+										  <span class="c"></span>
+										  <span class="d spin"><span class="e"></span></span>
+										  <span class="r r1"></span>
+										  <span class="r r2"></span>
+										  <span class="r r3"></span>
+										  <span class="r r4"></span>
+										</div>
+									</center>
 				    			</div>
 			    			</div>
     					</div>

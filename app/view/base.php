@@ -43,7 +43,7 @@ if (isset($_GET['accept'])) {
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <a href="'.BASE_DIR.'/desk/perfil/"><li class="active dropdown-item"><img style="width:16px; margin-top:5px; margin-right:5px; float:left;" src="'.BASE_DIR.'/design/css/imagenes/favicon.ico"> Mi Perfil Gurú</li></a>
                 <a href="'.BASE_DIR.'/desk/mis_certificados/"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
-                <a href="desk/teach/teacher"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
+                <a href="'.BASE_DIR.'/maestros/dashboard/"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
                 <a href="'.BASE_DIR.'/desk/mis_cursos/"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
                 <a href="'.BASE_DIR.'/la_bolsa/mis_vacantes/"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
                 <a href="'.BASE_DIR.'/usuarios/mis_datos/"><li class="dropdown-item"><i class="blue-dark fa fa-database" aria-hidden="true"></i> Mis Datos</li></a>
@@ -70,7 +70,7 @@ if (isset($_GET['accept'])) {
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <a href="'.BASE_DIR.'/desk/perfil/"><li class="active dropdown-item"><img style="width:16px; margin-top:5px; margin-right:5px; float:left;" src="'.BASE_DIR.'/design/css/imagenes/favicon.ico"> Mi Perfil Gurú</li></a>
                 <a href="'.BASE_DIR.'/desk/mis_certificados/"><li class="dropdown-item"><i class="blue-sun fa fa-certificate" aria-hidden="true"></i> Mis Certificados</li></a>
-                <a href="desk/teach/teacher"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
+                <a href="'.BASE_DIR.'/maestros/dashboard/"><li class="dropdown-item"><i class="green-lanter fa fa-graduation-cap" aria-hidden="true"></i> Enseño</li></a>
                 <a href="'.BASE_DIR.'/desk/mis_cursos/"><li class="dropdown-item"><i class="red-black fa fa-book" aria-hidden="true"></i> Aprendo</li></a>
                 <a href="'.BASE_DIR.'/la_bolsa/mis_vacantes/"><li class="dropdown-item"><i class="purple-black fa fa-suitcase" aria-hidden="true"></i> Empleos</li></a>
                 <a href="'.BASE_DIR.'/usuarios/mis_datos/"><li class="dropdown-item"><i class="blue-dark fa fa-database" aria-hidden="true"></i> Mis Datos</li></a>

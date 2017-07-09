@@ -68,7 +68,7 @@
             <p>
               <?php
                 if ($ArrDataProfUser==0) {
-                  echo "No haz llenado tu biografía, Llenala <a href='data_user'> Aquí</a>";
+                  echo "No haz llenado tu biografía, Llenala <a href='".BASE_DIR."/usuarios/mis_datos/'> Aquí</a>";
                 }else{
                   echo $DataProfessional[1];
                 }          
@@ -80,7 +80,7 @@
             <div class="margin-lestc-top">
             <?php
               if ($ArrSocialMedia==0) {
-                echo "<p>No haz agregado Redes sociales, Agrega tus Redes <a href='data_user'>Aquí</a></p>";
+                echo "<p>No haz agregado Redes sociales, Agrega tus Redes <a href='".BASE_DIR."/usuarios/mis_datos/'>Aquí</a></p>";
               }else{
                 foreach ($ArrSocialMedia as $DataSocial) {
                   if($DataSocial[0]!=NULL) {

@@ -35,7 +35,7 @@
               echo '<center>
                     <div class="intermediate margin-bottom padding-lestc">
                       <br><br><br>
-                        <h2><i class="fa fa-suitcase" aria-hidden="true"></i> Usted no Tiene ningúna Vacante Publicada. <a href="vacancy-published">Publique Aquí.</a></h2>
+                        <h2><i class="fa fa-suitcase" aria-hidden="true"></i> Usted no Tiene ningúna Vacante Publicada. <a href="'.BASE_DIR.'/la_bolsa/publicar_vacante/">Publique Aquí.</a></h2>
                     </div>
                   </center>' ;
             }else{

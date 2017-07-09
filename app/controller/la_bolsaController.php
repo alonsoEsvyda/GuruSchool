@@ -90,11 +90,11 @@
 
             if ($ValidateSession && $TimeSession) {
                 if ($DatapProfesional == false) {
-                    redirect("ususario","datos","request","Debes de llenar tus Datos Profesionales.","");
+                    redirect("usuarios","mis_datos","request","Debes de llenar tus Datos Profesionales.","");
                 }else if($DataAccount == false){
-                    redirect("ususario","datos","request","Debes de llenar tus Datos Bancarios.","");
+                    redirect("usuarios","mis_datos","request","Debes de llenar tus Datos Bancarios.","");
                 }else if($DataUser == false){
-                    redirect("ususario","datos","request","Llena Primero tu Datos Personales.","");
+                    redirect("usuarios","mis_datos","request","Llena Primero tu Datos Personales.","");
                 }
             }
 

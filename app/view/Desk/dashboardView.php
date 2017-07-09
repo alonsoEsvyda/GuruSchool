@@ -57,7 +57,7 @@
             </div>
             <!--Cursos que Enseño-->
             <div data-step="2" data-intro="<h1 class='intro-tittle-letter h1-black'>Bien!!</h1><br> Esta es la Sección del Maestro, encuentra los cursos que enseñas, el estado, y más herramientas que te ayudarán a desempeñar tu labor como Tutor." style="border-top:2px solid rgba(230, 126, 34,1.0);" class="margin-top  content-description table-responsive">
-              <a href="<?= BASE_DIR; ?>/maestros/mis_cursos/"><h1 data-step="3" data-intro="Da click aquí e ingresa a la Plataforma del Maestro" class="h1-hover h1-black">Plataforma del Maestro</h1></a>
+              <a href="<?= BASE_DIR; ?>/maestros/dashboard/"><h1 data-step="3" data-intro="Da click aquí e ingresa a la Plataforma del Maestro" class="h1-hover h1-black">Plataforma del Maestro</h1></a>
               <p>Cursos que enseño:</p>
               <table class="table table-hover">
                   <tbody>
@@ -67,7 +67,7 @@
                         <tr>
                           <td>
                             <p>
-                              -Aún no está enseñando ningún Curso, Animate y empieza <a href="teach/teacher">Aquí</a>
+                              -Aún no está enseñando ningún Curso, Animate y empieza <a href="<?= BASE_DIR; ?>/maestros/dashboard/">Aquí</a>
                             </p>
                           </td>
                         </tr>
@@ -164,7 +164,7 @@
                         <div class="card-block">
                             <h4 class="card-title">Mi Perfil Gurú</h4>
                             <p class="card-text">Echale un Vistazo</p>
-                            <a href="data_user?request=Completar Datos Personales" class="btn btn-primary">Completar Pérfil</a>
+                            <a href="<?= BASE_DIR; ?>/usuarios/mis_datos/&request=Completar Datos Personales" class="btn btn-primary">Completar Pérfil</a>
                         </div>
                     </div>
                   <?php
@@ -188,7 +188,7 @@
                             <?php
                               if ($ArrDataProfUser == 0) {
                                 ?>
-                                  <a href="data_user?request=Completar Datos Profesionales"  class="btn btn-primary">Completar Pérfil</a>
+                                  <a href="<?= BASE_DIR; ?>/usuarios/mis_datos/&request=Completar Datos Profesionales"  class="btn btn-primary">Completar Pérfil</a>
                                 <?php
                               }else{
                                 ?>
@@ -205,14 +205,14 @@
                 <hr>
                   <a href="<?= BASE_DIR; ?>/desk/mis_certificados/"><img data-step="5" data-intro="Descarga los certificados que hallas ganado" style="width:100%; height:auto;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_certificado.png"></a>
                 <hr>
-                  <a href="teach/teacher"><img data-step="6" data-intro="Tienes algún talento? Eseñalo y Gana Dinero." style="width:100%; height:auto; margin-bottom:40px;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_maestro.png"></a>
+                  <a href="<?= BASE_DIR; ?>/maestros/dashboard/"><img data-step="6" data-intro="Tienes algún talento? Eseñalo y Gana Dinero." style="width:100%; height:auto; margin-bottom:40px;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_maestro.png"></a>
               </div>
               <div class="visible-xs">
                 <center>
                   <hr>
                     <a href="<?= BASE_DIR; ?>/desk/mis_certificados/"><img style="width:50%; height:auto;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_certificado.png"></a>
                   <hr>
-                    <a href="teach/teacher"><img style="width:50%; height:auto; margin-bottom:40px;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_maestro.png"></a>
+                    <a href="<?= BASE_DIR; ?>/maestros/dashboard/"><img style="width:50%; height:auto; margin-bottom:40px;" src="<?= BASE_DIR; ?>/design/css/imagenes/baner_maestro.png"></a>
                 </center>
               </div>
             </div>

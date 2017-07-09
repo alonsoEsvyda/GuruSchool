@@ -39,7 +39,7 @@
               ?>
                 <div class="intermediate">
                   <center>
-                    <h2 class="margin-lestb-bottom margin-lestb-top"> NO TIENES CERTIFICADOS DISPONIBLES</h2><a href="../Cursos?accept=yes"><button class="margin-lestb-bottom btn btn-default">Busca un Curso y Gana</button></a>
+                    <h2 class="margin-lestb-bottom margin-lestb-top"> NO TIENES CERTIFICADOS DISPONIBLES</h2><a href="<?= BASE_DIR; ?>/cursos/lista/&accept=yes"><button class="margin-lestb-bottom btn btn-default">Busca un Curso y Gana</button></a>
                   </center>
                 </div>
               <?php

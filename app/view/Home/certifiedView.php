@@ -11,7 +11,7 @@
 		                	<h1>Obten tu Certificado</h1><br>
 			                <h1>De Participación.</h1><br>
 			                <p>Mejora tu Curriculum certificando tus Conocimientos.</p>
-             				  <a href="Cursos.php?accept=yes"><button type="button" class="waves-effect waves-light wow pulse animated btn btn-default">Ver Cursos</button></a>
+             				  <a href="<?= BASE_DIR; ?>/cursos/lista/&accept=yes"><button type="button" class="waves-effect waves-light wow pulse animated btn btn-default">Ver Cursos</button></a>
 		                </center>
 		            </div>
     			</div>            

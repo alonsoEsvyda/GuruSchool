@@ -6,7 +6,8 @@
 */
 class Rest {    
     public function API(){
-        header('Content-Type: application/json; charset=UTF-8');                
+        header('Content-Type: application/json; charset=UTF-8');
+        header('Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS');                
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($method) {
         case 'GET'://consulta

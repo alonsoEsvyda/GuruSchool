@@ -39,7 +39,7 @@
               echo "<center>
                     <div class='intermediate margin-bottom padding-lestb'>
                       <br><br><br>
-                        <h2><i class='fa fa-pencil' aria-hidden='true'></i> Usted no Está apuntadoa ningún Curso. Busque un Curso <a href='../Cursos?accept=yes'>Aquí</a></h2>
+                        <h2><i class='fa fa-pencil' aria-hidden='true'></i> Usted no Está apuntadoa ningún Curso. Busque un Curso <a href='".BASE_DIR."/cursos/lista/&accept=yes'>Aquí</a></h2>
                     </div>
                   </center>" ;
             }else{

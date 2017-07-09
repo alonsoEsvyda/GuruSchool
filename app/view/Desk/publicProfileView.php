@@ -127,7 +127,7 @@
               echo '<center>
                     <div class="intermediate margin-bottom padding-lestb">
                       <br><br><br>
-                        <h2><i class="fa fa-smile-o" aria-hidden="true"></i> Este usuario no aprende ningún Curso</h2>
+                        <h2 style="color: rgba(85, 92, 99, 0.49);"><i class="fa fa-smile-o" aria-hidden="true"></i> Este usuario no aprende ningún Curso</h2>
                     </div>
                   </center>' ;
             }else{
@@ -194,7 +194,7 @@
               echo '<center>
                     <div class="intermediate margin-bottom padding-lestb">
                       <br><br><br>
-                        <h2><i class="fa fa-smile-o" aria-hidden="true"></i> Este usuario no enseña ningún Curso</h2>
+                        <h2 style="color: rgba(85, 92, 99, 0.49);"><i class="fa fa-smile-o" aria-hidden="true"></i> Este usuario no enseña ningún Curso</h2>
                     </div>
                   </center>' ;
             }else{
