@@ -174,6 +174,33 @@
             return $ArrayCat;
         }
 
+        public function GetCategorie($categoria){
+            $SQLGetIdCat=$this->db()->prepare("SELECT Id_Pk_Categorias FROM G_Categorias WHERE Vc_NombreCat= ? ");
+            $SQLGetIdCat->bind_param("s", $categoria);
+            $SQLGetIdCat->execute();
+            $SQLGetIdCat->store_result();
+            if ($SQLGetIdCat->num_rows == 0) {
+                return false;
+            }else{
+                $SQLGetIdCat->bind_result($IdCat);
+                $SQLGetIdCat->fetch();
+                return $IdCat;
+            }
+        }
+
+        public function GetSubCategorie($IdCat){
+            $SQLGetSubCat=$this->db()->prepare("SELECT Vc_SubCat FROM G_Sub_Categoria WHERE Int_Fk_IdCat= ? ");
+            $SQLGetSubCat->bind_param("s", $IdCat);
+            $SQLGetSubCat->execute();
+            $SQLGetSubCat->store_result();
+            $SQLGetSubCat->bind_result($NameSubCat);
+            while ($SQLGetSubCat->fetch()) {
+                $ArrayData[] = array($NameSubCat);
+            }
+            $SQLGetSubCat->close();
+            return $ArrayData;
+        }
+
         public function SQLProgressCourse($IdUser,$IdCourse,$StateVideo){
             $SqlGetProgress=$this->db()->prepare("SELECT ROUND((SELECT COUNT(a.Vc_EstadoVideo) as videos FROM G_Usuarios_Cursos AS a WHERE a.Vc_EstadoVideo=? AND a.Int_Fk_IdCurso=$IdCourse AND a.Int_Fk_IdUsuario=$IdUser)*100/(SELECT COUNT(b.Int_Fk_IdCurso) AS Id FROM G_Usuarios_Cursos AS b WHERE b.Int_Fk_IdCurso=? AND b.Int_Fk_IdUsuario=$IdUser)) AS Porcentaje FROM G_Usuarios_Cursos WHERE Int_Fk_IdUsuario=? ");
             $SqlGetProgress->bind_param("sii",$StateVideo,$IdCourse,$IdUser);
@@ -249,5 +276,15 @@
             $SqlGetDataTeach->close();
             return $ArrayData;
         } 
+
+        public function InsertNewCourse($IdCategorie,$IdSession,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$StrEstadoCurso,$IntPrecio){
+            $SqlInsertData=$this->db()->prepare("INSERT INTO G_Cursos (Int_Fk_IdCat,Int_Fk_IdUsuario,Vc_NombreCurso,Vc_ResumenCurso,Txt_DescripcionCompleta,Vc_Categoria,Vc_SubCategoria,Vc_VideoPromocional,Vc_Imagen_Promocional,Vc_TipoCurso,Vc_EstadoCurso,Int_PrecioCurso) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ");
+            $SqlInsertData->bind_param("iisssssssssi", $IdCategorie,$IdSession,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$StrEstadoCurso,$IntPrecio);
+            if ($SqlInsertData->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
 ?>

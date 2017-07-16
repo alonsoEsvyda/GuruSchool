@@ -14,7 +14,7 @@
                   <center>
                     <h2>Plataforma del Maestro</h2>
                     <p>En esta Sección puedes Enseñar, Cobrar y Editar tus Cursos</p>
-                    <a href="up_course"><button type="button" data-step="1" data-intro="Si tienes un talento que mostrár, enseñalo aquí en un Video-Curso" class="waves-effect waves-light wow pulse animated btn btn-default">Enseña Un Curso</button></a>
+                    <a href="<?= BASE_DIR; ?>/maestros/nuevo_curso/"><button type="button" data-step="1" data-intro="Si tienes un talento que mostrár, enseñalo aquí en un Video-Curso" class="waves-effect waves-light wow pulse animated btn btn-default">Enseña Un Curso</button></a>
                   </center>
               </div>
             </div>            
@@ -92,7 +92,7 @@
                                     
                                     case 'Rechazado':
                                       ?>
-                                        <a href="update_course/<?= $Courses[0]; ?>">
+                                        <a href="<?= BASE_DIR; ?>/maestros/actualizar/<?= $Courses[0]; ?>/">
                                             <div class="mask waves-effect"></div>
                                         </a>
                                       <?php
@@ -373,21 +373,5 @@
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/app.js"></script>
 <!--subir vídeos-->
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/ajax/upload.js"></script>
-<script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/jquery/config_tooltip.js"></script>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/jquery/config_notify.js"></script>
-<script type="text/javascript">
-  function SendData(button){
-    var DataCourse=$(button).attr('data-course');
-    $('#modal-message').find('.btn-primary').attr('data-course',DataCourse);
-  }
-  function SendCharge(button){
-    var DataCourse=$(button).attr('data-course');
-      $.post(hostname()+'/GuruSchool/maestros/paymentCharge/',{
-        Data:DataCourse,
-      },function(info){
-        if (info==true) {
-          window.location="payments?requestok=Le notificaremos el Pago por Email o Telefono, tan pronto esté listo.";
-        }
-      });
-  }
-</script>
+<script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/jquery/sendCharge.js"></script>

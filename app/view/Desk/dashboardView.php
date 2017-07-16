@@ -97,7 +97,7 @@
                                   
                                   case 'Rechazado':
                                       ?>
-                                        <a href="teach/update_course/<?= $Data[0]; ?>">
+                                        <a href="<?= BASE_DIR; ?>/maestros/actualizar/<?= $Data[0]; ?>/">
                                           <p>
                                             <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <?= $Data[1]."  <span class='label label-danger'>Rechazado</span>"; ?>

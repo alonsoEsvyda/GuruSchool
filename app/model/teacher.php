@@ -87,5 +87,67 @@
             $SqlGetPayment->close();
             return $ArrayData;
         }
+
+        public function GetDataRejectedCourse($IdCurso,$IdUser,$State){
+            //Traemos los datos relevantes del curso
+            $SqlGetDataCourse=$this->db()->prepare("SELECT Id_Pk_Curso,Vc_NombreCurso,Vc_Imagen_Promocional,Vc_EstadoCurso,Vc_TipoCurso,Int_PrecioCurso,Vc_ResumenCurso,Txt_DescripcionCompleta,Vc_Categoria,Vc_SubCategoria,Vc_VideoPromocional,Txt_Nota FROM G_Cursos WHERE Id_Pk_Curso = ? AND Int_Fk_IdUsuario= ? AND Vc_EstadoCurso= ?  ");
+            $SqlGetDataCourse->bind_param("iis",$IdCurso,$IdUser,$State);
+            $SqlGetDataCourse->execute();
+            $SqlGetDataCourse->store_result();
+            if ($SqlGetDataCourse->num_rows==0) {
+                return false;
+            }else{
+                $SqlGetDataCourse->bind_result($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice,$StrResumen,$StrDescripcion,$StrCategorie,$StrSubcategorie,$StrVideo,$StrNota);
+
+                $SqlGetDataCourse->fetch();
+                
+                return array($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice,$StrResumen,$StrDescripcion,$StrCategorie,$StrSubcategorie,$StrVideo,$StrNota);
+                $SqlGetDataCourse->close();
+            }
+        }
+
+        public function UpdatePartialDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State){
+            //Actualizamos los datos parciales dle curso
+            $SqlUpdateData=$this->db()->prepare("UPDATE G_Cursos SET Int_Fk_IdCat=?,Vc_NombreCurso=?,Vc_ResumenCurso=?,Txt_DescripcionCompleta=?,Vc_Categoria=?,Vc_SubCategoria=?,Vc_VideoPromocional=?,Vc_TipoCurso=?,Int_PrecioCurso=? WHERE Id_Pk_Curso= ? AND Int_Fk_IdUsuario= ? AND Vc_EstadoCurso= ?");
+            $SqlUpdateData->bind_param("isssssssiiis", $IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
+            if ($SqlUpdateData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function UpdateAllDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State){
+            //Actualizamos toda la información del curso
+            $SqlUpdateData=$this->db()->prepare("UPDATE G_Cursos SET Int_Fk_IdCat=?,Vc_NombreCurso=?,Vc_ResumenCurso=?,Txt_DescripcionCompleta=?,Vc_Categoria=?,Vc_SubCategoria=?,Vc_VideoPromocional=?,Vc_Imagen_Promocional=?,Vc_TipoCurso=?,Int_PrecioCurso=? WHERE Id_Pk_Curso= ? AND Int_Fk_IdUsuario= ? AND Vc_EstadoCurso= ?");
+            $SqlUpdateData->bind_param("issssssssiiis", $IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
+            if ($SqlUpdateData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function SendReviewCourse($State,$IdCourse,$IdSession){
+            $SqlUpdateState=$this->db()->prepare("UPDATE G_Cursos SET Vc_EstadoCurso= ? WHERE Id_Pk_Curso= ? AND Int_Fk_IdUsuario= ?");
+            $SqlUpdateState->bind_param("sii", $State,$IdCourse,$IdSession);
+            if ($SqlUpdateState->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function GetPromotionalImgCourse($IdCourse){
+            $SqlImage = $this->db()->prepare("SELECT Vc_Imagen_Promocional FROM G_Cursos WHERE Id_Pk_Curso = ?");
+            $SqlImage->bind_param("i",$IdCourse);
+            $SqlImage->execute();
+            $SqlImage->store_result();
+            $SqlImage->bind_result($image);
+            $SqlImage->fetch();
+
+            return $image;
+            $SqlImage->close();
+        }
     }
 ?>
