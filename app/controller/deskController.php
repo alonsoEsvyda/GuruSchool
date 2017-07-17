@@ -75,6 +75,12 @@
             $this->render("Desk","learnView.php",array("DataMyCourse"=>$DataMyCourse));
         }
 
+        // public function ApiLearnCourses(){
+        //     $DataMyCourse = $this->courses->SQLGetCoursesUser($_SESSION['Data']['Id_Usuario']);
+            
+        //     echo json_encode($DataMyCourse, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        // }
+
         public function mis_certificados(){
             //Asignamos el tiempo actual a la variable de sesión
             $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");

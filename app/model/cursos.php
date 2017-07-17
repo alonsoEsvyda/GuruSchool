@@ -124,6 +124,19 @@
             }
         }
 
+        public function ValidTypeCourse($IdCurso,$StrType,$IdSession){
+            //verificamos que el curso sea De Pago
+            $SqlValidateFree=$this->db()->prepare("SELECT Vc_TipoCurso FROM G_Cursos WHERE Id_Pk_Curso= ? AND Vc_TipoCurso=? AND Int_Fk_IdUsuario= ? ");
+            $SqlValidateFree->bind_param("isi", $IdCurso,$StrType,$IdSession);
+            $SqlValidateFree->execute();
+            $SqlValidateFree->store_result();
+            if ($SqlValidateFree->num_rows == 0) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+
         public function GetTypeCourse($IdCourse){
             $GetTypeCourse=$this->db()->prepare("SELECT Vc_TipoCurso,Int_PrecioCurso,Vc_NombreCurso,Int_Fk_IdUsuario FROM G_Cursos WHERE Id_Pk_Curso = ? ");
             $GetTypeCourse->bind_param("i", $IdCourse);
@@ -281,6 +294,133 @@
             $SqlInsertData=$this->db()->prepare("INSERT INTO G_Cursos (Int_Fk_IdCat,Int_Fk_IdUsuario,Vc_NombreCurso,Vc_ResumenCurso,Txt_DescripcionCompleta,Vc_Categoria,Vc_SubCategoria,Vc_VideoPromocional,Vc_Imagen_Promocional,Vc_TipoCurso,Vc_EstadoCurso,Int_PrecioCurso) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ");
             $SqlInsertData->bind_param("iisssssssssi", $IdCategorie,$IdSession,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$StrEstadoCurso,$IntPrecio);
             if ($SqlInsertData->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function GetDataRejectedCourse($IdCurso,$IdUser,$State){
+            //Traemos los datos relevantes del curso
+            $SqlGetDataCourse=$this->db()->prepare("SELECT Id_Pk_Curso,Vc_NombreCurso,Vc_Imagen_Promocional,Vc_EstadoCurso,Vc_TipoCurso,Int_PrecioCurso,Vc_ResumenCurso,Txt_DescripcionCompleta,Vc_Categoria,Vc_SubCategoria,Vc_VideoPromocional,Txt_Nota FROM G_Cursos WHERE Id_Pk_Curso = ? AND Int_Fk_IdUsuario= ? AND Vc_EstadoCurso= ?  ");
+            $SqlGetDataCourse->bind_param("iis",$IdCurso,$IdUser,$State);
+            $SqlGetDataCourse->execute();
+            $SqlGetDataCourse->store_result();
+            if ($SqlGetDataCourse->num_rows==0) {
+                return false;
+            }else{
+                $SqlGetDataCourse->bind_result($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice,$StrResumen,$StrDescripcion,$StrCategorie,$StrSubcategorie,$StrVideo,$StrNota);
+
+                $SqlGetDataCourse->fetch();
+                
+                return array($IntIdCourse,$StrNameTeachC,$StrImage,$StrStateCourse,$StrTypecourse,$Intprice,$StrResumen,$StrDescripcion,$StrCategorie,$StrSubcategorie,$StrVideo,$StrNota);
+                $SqlGetDataCourse->close();
+            }
+        }
+
+        public function UpdatePartialDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State){
+            //Actualizamos los datos parciales dle curso
+            $SqlUpdateData=$this->db()->prepare("UPDATE G_Cursos SET Int_Fk_IdCat=?,Vc_NombreCurso=?,Vc_ResumenCurso=?,Txt_DescripcionCompleta=?,Vc_Categoria=?,Vc_SubCategoria=?,Vc_VideoPromocional=?,Vc_TipoCurso=?,Int_PrecioCurso=? WHERE Id_Pk_Curso= ? AND Int_Fk_IdUsuario= ? AND Vc_EstadoCurso= ?");
+            $SqlUpdateData->bind_param("isssssssiiis", $IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
+            if ($SqlUpdateData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function UpdateAllDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State){
+            //Actualizamos toda la información del curso
+            $SqlUpdateData=$this->db()->prepare("UPDATE G_Cursos SET Int_Fk_IdCat=?,Vc_NombreCurso=?,Vc_ResumenCurso=?,Txt_DescripcionCompleta=?,Vc_Categoria=?,Vc_SubCategoria=?,Vc_VideoPromocional=?,Vc_Imagen_Promocional=?,Vc_TipoCurso=?,Int_PrecioCurso=? WHERE Id_Pk_Curso= ? AND Int_Fk_IdUsuario= ? AND Vc_EstadoCurso= ?");
+            $SqlUpdateData->bind_param("issssssssiiis", $IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
+            if ($SqlUpdateData->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function SendReviewCourse($State,$IdCourse,$IdSession){
+            $SqlUpdateState=$this->db()->prepare("UPDATE G_Cursos SET Vc_EstadoCurso= ? WHERE Id_Pk_Curso= ? AND Int_Fk_IdUsuario= ?");
+            $SqlUpdateState->bind_param("sii", $State,$IdCourse,$IdSession);
+            if ($SqlUpdateState->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function GetPromotionalImgCourse($IdCourse){
+            $SqlImage = $this->db()->prepare("SELECT Vc_Imagen_Promocional FROM G_Cursos WHERE Id_Pk_Curso = ?");
+            $SqlImage->bind_param("i",$IdCourse);
+            $SqlImage->execute();
+            $SqlImage->store_result();
+            $SqlImage->bind_result($image);
+            $SqlImage->fetch();
+
+            return $image;
+            $SqlImage->close();
+        }
+
+        public function SQLDataVideos($IdPkCurso){
+            $SqlGetNameVideos = $this->db()->prepare("SELECT Txt_NombreVideo,Id_Pk_VideosCurso,Vc_VideoArchivo FROM G_Videos_Curso WHERE Int_Fk_IdCurso = ?");
+            $SqlGetNameVideos->bind_param("s",$IdPkCurso);
+            $SqlGetNameVideos->execute();
+            $SqlGetNameVideos->store_result();
+            if ($SqlGetNameVideos->num_rows==0) {
+                return false;
+            }else{
+                $SqlGetNameVideos->bind_result($NameVideo,$IntIdVideo,$Srcvideo);
+                while($SqlGetNameVideos->fetch()){
+                    $ArrayNameVideo[]=array($NameVideo,$IntIdVideo,$Srcvideo);
+                }
+                $SqlGetNameVideos->close();
+                return $ArrayNameVideo;
+            }
+        }
+
+        public function InsertVideoCourse($IdCurso,$StrName,$NameVideoFile){
+            $SqlInsertVideo=$this->db()->prepare("INSERT INTO G_Videos_Curso (Int_Fk_IdCurso,Txt_NombreVideo,Vc_VideoArchivo) VALUES(?,?,?)");
+            $SqlInsertVideo->bind_param("iss", $IdCurso,$StrName,$NameVideoFile);
+
+            if ($SqlInsertVideo->execute()) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function SelectMaxIdVideo(){
+            //sacamos el último Id Insertado
+            $SqlGetVideoId=$this->db()->prepare("SELECT MAX(Id_Pk_VideosCurso) as IdVideo FROM G_Videos_Curso");
+            $SqlGetVideoId->execute();
+            $SqlGetVideoId->store_result();
+            $SqlGetVideoId->bind_result($IdVideo);
+            $SqlGetVideoId->fetch();
+
+            return $IdVideo;
+        }
+
+        public function GetDataAndFileVideo($IdVideo,$IdUser){
+            $SqlGetName=$this->db()->prepare("SELECT a.Vc_VideoArchivo FROM G_Videos_Curso AS a INNER JOIN G_Cursos AS b ON a.Int_Fk_IdCurso = b.Id_Pk_Curso  WHERE a.Id_Pk_VideosCurso = ? AND b.Int_Fk_IdUsuario = ?");
+            $SqlGetName->bind_param("ii",$IdVideo,$IdUser);
+            $SqlGetName->execute();
+            $SqlGetName->store_result();
+            if ($SqlGetName->num_rows == 0) {
+                return false;
+            }else{
+                $SqlGetName->bind_result($NameVideo);
+                $SqlGetName->fetch();
+
+                return $NameVideo;
+            }
+            $SqlGetName->close;
+        }
+
+        public function DeleteCourse($IdVideo){
+            $SqlDeleteVideo=$this->db()->prepare("DELETE FROM G_Videos_Curso WHERE Id_Pk_VideosCurso = ?");
+            $SqlDeleteVideo->bind_param("i",$IdVideo);
+            if ($SqlDeleteVideo->execute()) {
                 return true;
             }else{
                 return false;

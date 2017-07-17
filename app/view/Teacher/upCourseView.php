@@ -116,7 +116,6 @@
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/app.js"></script>
 <!--subir vídeos-->
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/ajax/upload.js"></script>
-<script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/jquery/config_tooltip.js"></script>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/jquery/config_notify.js"></script>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/jquery/config_tinymice.js"></script>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Teachers/jquery/getSubcat.js"></script>

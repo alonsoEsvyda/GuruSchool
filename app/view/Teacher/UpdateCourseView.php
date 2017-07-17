@@ -216,8 +216,10 @@
 	    	$.post(Hostname()+'/GuruSchool/maestros/sendConfirmationCourse/',{
 	        	Id:$(button).attr('data-id'),
 	        },function(info){
-	        	if (info) {
+	        	if (info == true) {
 	        		window.location=Hostname()+"/GuruSchool/maestros/dashboard&requestok=Curso en Revisión: Espere Mientras lo Aprobamos";
+	        	}else{
+	        		window.location=Hostname()+"/GuruSchool/maestros/dashboard&requestok=Hubo un error en el envío, intente más tarde.";
 	        	}
 	        });
 	    }else{

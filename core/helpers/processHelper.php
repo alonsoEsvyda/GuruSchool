@@ -44,7 +44,7 @@ function resizeImagen($ruta, $nombre, $alto, $ancho,$nombreN,$extension){
 
 function SizeFile($File)//Calculamos el tamaño de un archivo
 	{
-        $Max = 30000000;
+        $Max = 800000000;
         if($File > $Max){
           return false;
         } 

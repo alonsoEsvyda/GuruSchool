@@ -100,7 +100,7 @@
 
                                     case 'Aprobado':
                                       ?>
-                                        <a href="up_video_course/<?= $Courses[0]; ?>">
+                                        <a href="<?= BASE_DIR; ?>/maestros/videos/<?= $Courses[0]; ?>/">
                                             <div class="mask waves-effect"></div>
                                         </a>
                                       <?php

@@ -109,9 +109,9 @@
             }else{
 
                 //traemos el metodo que nos retorna los datos del curso
-                $ArrDataCourse = $this->teacher->GetDataRejectedCourse(TestInput($_GET['parametro']),$_SESSION['Data']['Id_Usuario'],"Rechazado");
+                $ArrDataCourse = $this->courses->GetDataRejectedCourse(TestInput($_GET['parametro']),$_SESSION['Data']['Id_Usuario'],"Rechazado");
                 if ($ArrDataCourse == false) {
-                    redirect("maestros","actualizar","request","Amig@ lo siento mucho, hubo un error.","");
+                    redirect("maestros","dashboard","request","Amig@ lo siento mucho, hubo un error.","");
                 }
 
                 //Traemos el meotod que nos retona la categorías
@@ -119,6 +119,274 @@
 
                 $this->render("Teacher","updateCourseView.php",array("ArrDataCourse"=>$ArrDataCourse,
                                                                     "ArrCategorias"=>$ArrCategorias));
+            }
+        }
+
+        public function videos(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+
+            if (!isset($_GET['parametro']) || $_GET['parametro']=="") {
+                redirect("maestros","dashboard","request","Ups, Hubo un Error","");
+            }else{
+
+                //traemos el metodo que nos retorna los datos del curso
+                $ArrDataCourse = $this->courses->GetDataRejectedCourse(TestInput($_GET['parametro']),$_SESSION['Data']['Id_Usuario'],"Aprobado");
+                if ($ArrDataCourse == false) {
+                    redirect("maestros","dashboard","request","Amig@ lo siento mucho, hubo un error. Creo que este curso no existe","");
+                }
+
+                //traemos el metodo que  nos retorna los vídeos
+                $ArrDataVideo=$this->courses->SQLDataVideos(TestInput($_GET['parametro']));
+
+                $this->render("Teacher","uploadVideosView.php",array("ArrDataCourse"=>$ArrDataCourse,
+                                                                    "ArrDataVideo"=>$ArrDataVideo));
+            }
+        }
+
+        public function SendReviewVideos(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            //Verificamos que venga algo en el IdC
+            if (!isset($_POST['IdC']) || $_POST['IdC']=="") {
+                redirect("maestros","dashboard","request","No Alteres los Datos, te Tenemos Vigilado...","");
+            }else{
+                //DesEncriptamos el IdC y lo Sanamos
+                $IdEncode=$_POST['IdC'];
+                $IdDecode=StringDecode($IdEncode);
+                $IdCurso=TestInput($IdDecode);
+                $IdSession=$_SESSION['Data']['Id_Usuario'];
+                $State="En Revision Video";
+
+                //Enviamos el Curso a Revisión
+                $SqlSendData=$this->courses->SendReviewCourse($State,$IdCurso,$IdSession);
+                if ($SqlSendData) {
+                    echo true;
+                }else{
+                    echo false;
+                }
+            }
+        }
+
+        public function UpPayVideos(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            //Verificamos que venga algo en el IdC
+            if (!isset($_POST['IdC']) || $_POST['IdC']=="" || $_POST['NameVideo']=="" || $_FILES['VideoArchivo']['name']=="") {
+                echo false;
+            }else{
+
+                //Verificamos que no exceda el limite de caracteres
+                if (strlen($_POST['NameVideo'])>100) {
+                    echo false;
+                }else{
+
+                    //DesEncriptamos el IdC
+                    $IdEncode = $_POST['IdC'];
+                    $IdDecode = StringDecode($IdEncode);
+
+                    //Definimos las Variables y las Sanamos
+                    $IdSession = $_SESSION['Data']['Id_Usuario'];
+                    $IdCurso = TestInput($IdDecode);
+                    $StrName = TestInput($_POST['NameVideo']);
+                    $StrVideo = TestInput($_FILES['VideoArchivo']['name']);
+                    $StrType = "De Pago";
+
+                    //verificamos que el curso sea De Pago
+                    $SqlValidate=$this->courses->ValidTypeCourse($IdCurso,$StrType,$IdSession);
+
+                    if ($SqlValidate == false) {
+                        echo false;
+                    }else{
+                        //verificamos que sea un archivo relacionado con estas extensiones
+                        $valid_exts = array('mp4', 'webm', 'ogv');
+
+                        $extension = end(explode(".", $StrVideo));
+                        if ((($_FILES["VideoArchivo"]["type"] == "video/mp4") || ($_FILES["VideoArchivo"]["type"] == "video/webm") || ($_FILES["VideoArchivo"]["type"] == "video/ogv")) && in_array($extension, $valid_exts)){
+                            //Verificamos que el tamaño del archivo no exceleda el limite
+                            $SizeVideo = SizeFile($_FILES['VideoArchivo']['size']);
+
+                            if ($SizeVideo) {
+                                //Creamos el Nombre del Vídeo
+                                $time = time();
+                                $NombreConEspacios = str_replace(' ','-',$StrName);
+
+                                //limpiamos el nombre de caracteres especiales
+                                $NombreLimpio = preg_replace('/[¿!¡;,:?#@()"]/','_',$NombreConEspacios);
+                                $NameVideoFile = "{$NombreLimpio}_$time.$extension";
+                                $direction = $_SERVER['DOCUMENT_ROOT'].BASE_DIR."/design/videos/";
+
+                                //Insertamos el Vídeo
+                                $SqlInsertVideo=$this->courses->InsertVideoCourse($IdCurso,$StrName,$NameVideoFile);
+
+                                if ($SqlInsertVideo) {
+                                    //Movemos el Archivo a la Carpeta Correspondiente
+                                    move_uploaded_file($_FILES['VideoArchivo']['tmp_name'], $direction.$NameVideoFile);
+                                    
+                                    //sacamos el último Id Insertado
+                                    $SqlGetVideoId=$this->courses->SelectMaxIdVideo();
+                                    $IdVideo = StringEncode($SqlGetVideoId);
+                                    $Array=array($IdVideo,$NameVideoFile);
+                                    //enviamos un objeto json
+                                    echo json_encode($Array);
+                                }
+                            }else{
+                                echo false;
+                            }
+                        }else{
+                            echo false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public function UpFreeVideos(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            //Verificamos que venga algo en el IdC
+            if (!isset($_POST['IdC']) || $_POST['IdC']=="" || $_POST['NameVideo']=="" || $_POST['UrlYoutube']=="") {
+                echo false;
+            }else{
+                //Verificamos que no excedan el limite de caracteress
+                if (strlen($_POST['NameVideo'])>100 || strlen($_POST['UrlYoutube'])>100) {
+                    echo false;
+                }else{
+                    //DesEncriptamos el IdC
+                    $IdEncode=$_POST['IdC'];
+                    $IdDecode = StringDecode($IdEncode);
+
+                    //Definimos las Variables y las Sanamos
+                    $IdSession=$_SESSION['Data']['Id_Usuario'];
+                    $IdCurso = TestInput($IdDecode);
+                    $StrName = TestInput($_POST['NameVideo']);
+                    $StrUrl = TestInput($_POST['UrlYoutube']);
+                    $StrType="Gratis";
+                    
+                    //verificamos que el curso sea Grátis
+                    $SqlValidateFree=$this->courses->ValidTypeCourse($IdCurso,$StrType,$IdSession);
+
+                    if ($SqlValidateFree == false) {
+                        echo false;
+                    }else{
+                        //Verificamos que la URL de Youtube sea Correcta y traemos el ID del vídeo
+                        $StrIdYoutube = GetIdYoutube($StrUrl);
+                        if ($StrIdYoutube==false) {
+                            echo false;
+                        }else{
+                            //Insertamos el Vídeo
+                            $SqlInsertVideo=$this->courses->InsertVideoCourse($IdCurso,$StrName,$StrIdYoutube);
+                            if ($SqlInsertVideo) {
+                                //sacamos el último Id Insertado
+                                $SqlGetVideoId=$this->courses->SelectMaxIdVideo();
+                                echo StringEncode($SqlGetVideoId);
+                            }
+                        }
+                    }
+                }
+            }
+        } 
+
+        public function DeleteVideoPay(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            //Verificamos que venga algo en el IdC
+            if (!isset($_POST['Id']) || $_POST['Id']=="") {
+                echo false;
+            }else{
+                //DesEncriptamos el IdC y lo Sanamos
+                $IdEncode = $_POST['Id'];
+                $IdDecode = StringDecode($IdEncode);
+                $IdVideo = TestInput($IdDecode);
+                $direction = $_SERVER['DOCUMENT_ROOT'].BASE_DIR."/design/videos/";
+
+                //Buscamos el Nombre dle Curso para eliminarlo de la BD
+                $SqlGetName=$this->courses->GetDataAndFileVideo($IdVideo,$_SESSION['Data']['Id_Usuario']);
+                if ($SqlGetName != false) {
+                    $NameVideo = $SqlGetName;
+                    //Eliminamos el vídeo
+                    unlink($direction.$NameVideo);
+                    //Eliminamos el Curso
+                    $SqlDeleteVideo=$this->courses->DeleteCourse($IdVideo);
+                    if ($SqlDeleteVideo) {
+                        echo true;
+                    }else{
+                        echo false;
+                    }
+                }else{
+                    echo false;
+                }
+            }
+        }
+
+        public function DeleteVideoFree(){
+            //Asignamos el tiempo actual a la variable de sesión
+            $_SESSION['Data']['Tiempo'] = date("Y-n-j H:i:s");
+            //traemos la ip real del usuario
+            $GetRealIp = getRealIP();
+            //validamos que exista la sesión y las credenciales sean correctas
+            $ValidateSession = ValidateSession($_SESSION['Data']['Id_Usuario'],$_SESSION['Data']['Ipuser'],$_SESSION['Data']['navUser'],$_SESSION['Data']['hostUser'],$GetRealIp,BASE_DIR."/home/iniciar_session/&request=Iniciar Sesión");
+            //Validamos el tiempo de vida de la sesión  
+            $TimeSession = SessionTime($_SESSION['Data']['Tiempo'],BASE_DIR."/session/logout/");
+
+            //Verificamos que venga algo en el IdC
+            if (!isset($_POST['Id']) || $_POST['Id']=="") {
+                echo false;
+            }else{
+                //DesEncriptamos el IdC y lo Sanamos
+                $IdEncode = $_POST['Id'];
+                $IdDecode = StringDecode($IdEncode);
+                $IdVideo = TestInput($IdDecode);
+
+                //Buscamos el Nombre dle Curso para eliminarlo de la BD
+                $SqlGetName=$this->courses->GetDataAndFileVideo($IdVideo,$_SESSION['Data']['Id_Usuario']);
+                if ($SqlGetName != false) {
+                    
+                    //Eliminamos el Curso
+                    $SqlDeleteVideo=$this->courses->DeleteCourse($IdVideo);
+                    if ($SqlDeleteVideo) {
+                        echo true;
+                    }else{
+                        echo false;
+                    }
+                }else{
+                    echo false;
+                }
             }
         }
 
@@ -191,7 +459,7 @@
                 //Validamos Que se halla subido una Imagen 
                 if (empty($StrImagen)) {
                     //Actualizamos los datos del Curso
-                    $SqlUpdateData=$this->teacher->UpdatePartialDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
+                    $SqlUpdateData=$this->courses->UpdatePartialDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
 
                     if ($SqlUpdateData) {
                         header("Location:".BASE_DIR."/maestros/actualizar/".$IdCurso);
@@ -222,10 +490,10 @@
                             redirect("maestros","dashboard","request","Ya existe esta Imagen en el Servidor","");
                         }else{
                             //Traemos la imagen actual del Curso
-                            $DataImage = $this->teacher->GetPromotionalImgCourse($IdCurso);
+                            $DataImage = $this->courses->GetPromotionalImgCourse($IdCurso);
 
                             //Actualizamos los datos del Curso
-                            $SqlUpdateData = $this->teacher->UpdateAllDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
+                            $SqlUpdateData = $this->courses->UpdateAllDataCourse($IdCategorie,$StrNombreCurso,$StrResumen,$StrDescripcion,$StrCategoria,$StrSubCategoria,$StrIdYoutube,$ResFoto,$StrTipoCurso,$IntPrecio,$IdCurso,$IdSession,$State);
                             if ($SqlUpdateData) {
                                 //movemos la imagen al directorio
                                 move_uploaded_file($_FILES['foto']['tmp_name'], $directorio.$foto);
@@ -434,7 +702,7 @@
             $State = "En Revision";
 
             //Actualizamos el Estado
-            $SqlUpdateState = $this->teacher->SendReviewCourse($State,$IdCourse,$IdSession);
+            $SqlUpdateState = $this->courses->SendReviewCourse($State,$IdCourse,$IdSession);
             if ($SqlUpdateState) {
                 echo true;
             }else{

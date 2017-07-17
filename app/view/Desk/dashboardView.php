@@ -108,7 +108,7 @@
 
                                   case 'Aprobado':
                                       ?>
-                                        <a href="teach/up_video_course/<?= $Data[0]; ?>">
+                                        <a href="<?= BASE_DIR; ?>/maestros/videos/<?= $Data[0]; ?>">
                                           <p>
                                             <i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <?= $Data[1]."  <span class='label label-info'>Aprobado</span>"; ?>

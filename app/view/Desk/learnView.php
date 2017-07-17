@@ -82,6 +82,13 @@
             }
           ?>
         </div>
+        <!-- <div class="col-md-12" ng-app="LearnCourses">
+          <div ng-controller="LearnCoursesController as learn">
+            <div ng-repeat="learn in learn.courses_get">
+              {{learn[1]}}
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -90,3 +97,28 @@
 <?= $footer; ?>
 <?= $resource_script; ?>
 <script type="text/javascript" src="<?= BASE_DIR; ?>/design/js/local_apps/Home/hostname.js"></script>
+<script type="text/javascript">
+  // (function () {
+    
+  //   'use strict';
+
+  //   var app = angular.module("LearnCourses", [ ]);
+
+  //   app.controller("LearnCoursesController", function($scope,$http){
+      
+  //     var ctrl = this;
+
+  //     ctrl.courses_get = {};
+
+  //     $http.post(Hostname()+"/GuruSchool/desk/ApiLearnCourses/")
+  //         .success(function(data){
+  //           ctrl.courses_get = data;
+  //         }).error(function(error){
+  //           console.log(error);
+  //         });
+
+
+  //   });
+
+  // })();
+</script>
