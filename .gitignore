@@ -1,4 +1,2 @@
 .DS_Store
-.mp4
-.webm
-.ogv
+design/videos/*
