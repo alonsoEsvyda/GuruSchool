@@ -49,6 +49,7 @@
                                 if ($value[3]==1) {
                                     //Creamos la sesión
                                     $_SESSION['Data']=array('Id_Usuario' => $value[0], 'Ipuser' => $Ip, 'navUser' => $_SERVER["HTTP_USER_AGENT"], 'hostUser' => gethostbyaddr($Ip),'Tiempo'=>time());
+                                    session_write_close();
                                     // header("Location:../user.php?request=lo lograste");
                                     echo true;
                                 }else if ($value[3]==0) {
@@ -68,6 +69,7 @@
                             foreach ($value_user as $value) {
                              $_SESSION['Data']=array('Id_Usuario' => $value[0], 'Ipuser' => $Ip, 'navUser' => $_SERVER["HTTP_USER_AGENT"], 'hostUser' => gethostbyaddr($Ip));
                             }
+                            session_write_close();
                             echo true;
                             // header("Location:../user.php");
                         }else{
@@ -162,7 +164,7 @@
                                                 $Ip=getRealIP();
                                                 //Creamos la sesión
                                                 $_SESSION['Data']=array('Id_Usuario' => $session[0], 'Ipuser' => $Ip, 'navUser' => $_SERVER["HTTP_USER_AGENT"], 'hostUser' => gethostbyaddr($Ip), 'Tiempo'=>date("Y-n-j H:i:s"));
-
+                                                session_write_close();
                                                 //por modificarse
                                                 header("Location:".BASE_DIR."/desk/dashboard/");
                                             }else if ($session[3]==0) {
